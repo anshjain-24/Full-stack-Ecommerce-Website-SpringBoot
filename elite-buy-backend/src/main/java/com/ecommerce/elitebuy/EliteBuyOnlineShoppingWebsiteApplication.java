@@ -9,6 +9,7 @@ public class EliteBuyOnlineShoppingWebsiteApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EliteBuyOnlineShoppingWebsiteApplication.class, args);
 		System.out.println("hello world");
+		System.out.println("this is 2nd line");
 	}
 
 }
