@@ -23,7 +23,6 @@ public class AppConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
-        // Cross-Origin Resource Sharing
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests(Authorize -> Authorize.requestMatchers("/api/**")
 						.authenticated()
@@ -32,20 +31,22 @@ public class AppConfig {
 				)
                 .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class)
                 .csrf().disable()     // Cross-Site Request Forgery
-                .cors().configurationSource(request -> {
-                    // TODO Auto-generated method stub
-                    CorsConfiguration cfg = new CorsConfiguration();
-                    cfg.setAllowedOrigins(Arrays.asList(
-                            "http://localhost:3000"
-                    ));
-                    cfg.setAllowedMethods(Collections.singletonList("*"));
-                    cfg.setAllowCredentials(true);
-                    cfg.setAllowedHeaders(Collections.singletonList("*"));
-                    cfg.setExposedHeaders(Arrays.asList("Authorization"));
-                    cfg.setMaxAge(3600L);
+                .cors().configurationSource(new CorsConfigurationSource() {
+					@Override
+					public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+						CorsConfiguration cfg = new CorsConfiguration();
+						cfg.setAllowedOrigins(Arrays.asList(
+								"http://localhost:3000"
+						));
+						cfg.setAllowedMethods(Collections.singletonList("*"));
+						cfg.setAllowCredentials(true);
+						cfg.setAllowedHeaders(Collections.singletonList("*"));
+						cfg.setExposedHeaders(Arrays.asList("Authorization"));
+						cfg.setMaxAge(3600L);
 
-                    return cfg;
-                })
+						return cfg;
+					}
+				})
                 .and().httpBasic().and().formLogin();
 
 		return http.build();
