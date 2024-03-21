@@ -22,6 +22,8 @@ public class CreateProductRequest {
     private String secondLevelCategory;
     private String thirdLevelCategory;
 
+    public CreateProductRequest() {
+    }
 
     public String getTitle() {
         return title;
