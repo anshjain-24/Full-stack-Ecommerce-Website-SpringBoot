@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Order {
+@Table(name = "Customer_Order")
+public class Order{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,6 +44,7 @@ public class Order {
     private int totalItem;
 
     private LocalDateTime createdAt;
+
 
     public Order() {
     }

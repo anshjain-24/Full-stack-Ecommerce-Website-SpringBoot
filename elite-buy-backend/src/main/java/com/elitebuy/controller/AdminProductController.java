@@ -36,14 +36,10 @@ public class AdminProductController {
 
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Product>> findAllProduct(){
-//        List<Product> products = productService.
-
-
-    return  null;
-    }
-
-
+//    @GetMapping("/all")
+//    public ResponseEntity<List<Product>> findAllProduct(){
+//
+//    return  null;
+//    }
 
 }

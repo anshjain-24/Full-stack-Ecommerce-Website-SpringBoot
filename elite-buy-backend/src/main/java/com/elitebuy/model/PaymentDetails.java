@@ -2,12 +2,11 @@ package com.elitebuy.model;
 
 import jakarta.persistence.Entity;
 
-@Entity
+//@Entity
 public class PaymentDetails {
-
     private String paymentMethod;
-
     private String status;
+
     private String paymentId;
     private String razorpayPaymentLinkId;
     private String razorpayPaymentLinkReferenceId;
