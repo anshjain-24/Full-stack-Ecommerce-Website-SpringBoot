@@ -1,6 +1,6 @@
 package com.elitebuy.service;
 
-import com.elitebuy.repository.UserRepository;
+import com.elitebuy.Repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,7 @@
 package com.elitebuy.service;
 
 import com.elitebuy.model.OrderItem;
-import com.elitebuy.repository.OrderItemRepository;
+import com.elitebuy.Repository.OrderItemRepository;
 import org.springframework.stereotype.Service;
 
 @Service

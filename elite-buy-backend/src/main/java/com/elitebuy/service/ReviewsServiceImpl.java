@@ -5,8 +5,8 @@ import com.elitebuy.Request.ReviewsRequest;
 import com.elitebuy.model.Product;
 import com.elitebuy.model.Reviews;
 import com.elitebuy.model.User;
-import com.elitebuy.repository.ProductRepository;
-import com.elitebuy.repository.ReviewRepository;
+import com.elitebuy.Repository.ProductRepository;
+import com.elitebuy.Repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

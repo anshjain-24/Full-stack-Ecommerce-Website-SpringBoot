@@ -1,4 +1,4 @@
-package com.elitebuy.repository;
+package com.elitebuy.Repository;
 
 import com.elitebuy.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;

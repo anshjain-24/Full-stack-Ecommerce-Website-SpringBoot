@@ -6,11 +6,10 @@ import com.elitebuy.model.Cart;
 import com.elitebuy.model.CartItem;
 import com.elitebuy.model.Product;
 import com.elitebuy.model.User;
-import com.elitebuy.repository.CartItemRepository;
-import com.elitebuy.repository.CartRepository;
+import com.elitebuy.Repository.CartItemRepository;
+import com.elitebuy.Repository.CartRepository;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service

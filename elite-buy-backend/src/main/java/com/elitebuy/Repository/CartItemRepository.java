@@ -1,4 +1,4 @@
-package com.elitebuy.repository;
+package com.elitebuy.Repository;
 
 import com.elitebuy.model.Cart;
 import com.elitebuy.model.CartItem;
