@@ -42,4 +42,21 @@ public class AdminProductController {
 //    return  null;
 //    }
 
+    @PutMapping("/{productId}/update")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product req, @PathVariable Long productId) throws ProductException{
+        Product product = productService.updateProduct(productId,req);
+        return new ResponseEntity<Product>(product,HttpStatus.CREATED);
+    }
+
+    @PostMapping("/creates")
+    public ResponseEntity<ApiResponse> createMultipleProduct(@RequestBody CreateProductRequest[] req){
+        for(CreateProductRequest product : req){
+            productService.createProduct(product);
+        }
+        ApiResponse res = new ApiResponse();
+        res.setMessage("product Added Successfully");
+        res.setStatus(true);
+
+        return new ResponseEntity<>(res,HttpStatus.CREATED);
+    }
 }

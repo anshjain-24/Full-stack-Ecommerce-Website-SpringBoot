@@ -5,7 +5,7 @@ import com.elitebuy.Request.LoginRequest;
 import com.elitebuy.Response.AuthResponse;
 import com.elitebuy.configuration.JwtProvider;
 import com.elitebuy.model.User;
-import com.elitebuy.repository.UserRepository;
+import com.elitebuy.Repository.UserRepository;
 import com.elitebuy.service.CustomUserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

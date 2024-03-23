@@ -3,7 +3,7 @@ package com.elitebuy.service;
 import com.elitebuy.Exception.UserException;
 import com.elitebuy.configuration.JwtProvider;
 import com.elitebuy.model.User;
-import com.elitebuy.repository.UserRepository;
+import com.elitebuy.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

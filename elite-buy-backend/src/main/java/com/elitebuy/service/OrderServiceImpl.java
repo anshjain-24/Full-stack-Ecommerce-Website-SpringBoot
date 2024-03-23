@@ -4,7 +4,7 @@ import com.elitebuy.Exception.OrderException;
 import com.elitebuy.model.Address;
 import com.elitebuy.model.Order;
 import com.elitebuy.model.User;
-import com.elitebuy.repository.CartRepository;
+import com.elitebuy.Repository.CartRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

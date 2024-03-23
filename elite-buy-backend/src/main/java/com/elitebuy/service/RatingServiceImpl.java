@@ -5,7 +5,7 @@ import com.elitebuy.Request.RatingRequest;
 import com.elitebuy.model.Product;
 import com.elitebuy.model.Rating;
 import com.elitebuy.model.User;
-import com.elitebuy.repository.RatingRepository;
+import com.elitebuy.Repository.RatingRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
