@@ -8,7 +8,7 @@ public class AddItemRequest {
 
     private String size;
 
-    private int quantity;
+    private Integer quantity;
 
     private Integer price;
 
@@ -31,7 +31,7 @@ public class AddItemRequest {
         this.size = size;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
