@@ -4,8 +4,10 @@ import com.elitebuy.Exception.UserException;
 import com.elitebuy.Request.LoginRequest;
 import com.elitebuy.Response.AuthResponse;
 import com.elitebuy.configuration.JwtProvider;
+import com.elitebuy.model.Cart;
 import com.elitebuy.model.User;
 import com.elitebuy.Repository.UserRepository;
+import com.elitebuy.service.CartService;
 import com.elitebuy.service.CustomUserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +33,14 @@ public class AuthController {
 
     private CustomUserServiceImpl customUserService;
 
-    public AuthController(UserRepository userRepository,PasswordEncoder passwordEncoder,CustomUserServiceImpl customUserService,JwtProvider jwtProvider){
+    private CartService cartService;
+
+    public AuthController(UserRepository userRepository,PasswordEncoder passwordEncoder,CustomUserServiceImpl customUserService,JwtProvider jwtProvider,CartService cartService){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.customUserService = customUserService;
         this.jwtProvider = jwtProvider;
+        this.cartService = cartService;
     }
 
 
@@ -60,6 +65,7 @@ public class AuthController {
         createdUser.setLname(lname);
 
         User savedUser = userRepository.save(createdUser);
+        Cart cart = cartService.createCart(savedUser);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(),savedUser.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);

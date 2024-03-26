@@ -54,6 +54,9 @@ public class CartServiceImpl implements CartService {
             cart.getCartItems().add(createdCartItem);
 
         }
+        else{
+            isPresent.setQuantity(isPresent.getQuantity()+ req.getQuantity());
+        }
         return "Item Added to Cart";
     }
 

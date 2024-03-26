@@ -1,10 +1,14 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { navigationData } from './navigationData'
 import { Avatar, Button, Menu, MenuItem } from '@mui/material'
 import { deepPurple } from '@mui/material/colors'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import AuthModal from '../../Auth/AuthModal'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUser, logout } from '../../../State/Auth/Action'
+import { store } from '../../../State/Store'
 
 
 
@@ -21,6 +25,9 @@ export default function Navigation() {
   const [anchorEl, setAnchorEL] = useState(false);
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
+  const {auth} = useSelector(store=>store)
+  const dispatch  = useDispatch();
+  const location = useLocation();
 
   const handleUserClick = (event) => {
     setAnchorEL(event.currentTarget);
@@ -33,16 +40,37 @@ export default function Navigation() {
   const handleOpen = () => {
     setOpenAuthModel(true);
   }
-  
+
   const handleClose = () => {
     setOpenAuthModel(false);
   }
 
-const handleCategoryClick =(category, section, item, close) => {
-  navigate(`/${category.id}/${section.id}/${item.name}`);
-  close();
-}
+  const handleCategoryClick = (category, section, item, close) => {
+    navigate(`/${category.id}/${section.id}/${item.name}`);
+    close();
+  }
 
+  useEffect(() => {
+    if(jwt){
+      dispatch(getUser(jwt)) 
+    }
+  },[jwt,auth.jwt])
+
+
+  useEffect(()=>{
+      if(auth.user){
+        handleClose()
+      }
+      if(location.pathname==='/Login' || location.pathname==='/Signup'){
+        navigate(-1)
+      }
+  },[auth.user])
+
+  const handleLogout=()=>{
+    dispatch(logout())
+    handleCloseUserMenu()
+    localStorage.clear();
+  }
 
   return (
     <div className="bg-white pb-10">
@@ -222,7 +250,7 @@ const handleCategoryClick =(category, section, item, close) => {
                 <div className="flex h-full space-x-8">
                   {navigationData.categories.map((category) => (
                     <Popover key={category.name} className="flex">
-                      {({ open, close}) => (
+                      {({ open, close }) => (
                         <>
                           <div className="relative flex">
                             <Popover.Button
@@ -286,14 +314,14 @@ const handleCategoryClick =(category, section, item, close) => {
                                           >
                                             {section.items.map((item) => (
                                               <li key={item.name} className="flex">
-                                              <p onClick={() => handleCategoryClick(
-                                                category,
-                                                section,
-                                                item, 
-                                                close
-                                              )}
-                                              className='cursor-pointer hover:text-gray-800'
-                                              >  
+                                                <p onClick={() => handleCategoryClick(
+                                                  category,
+                                                  section,
+                                                  item,
+                                                  close
+                                                )}
+                                                  className='cursor-pointer hover:text-gray-800'
+                                                >
                                                   {item.name}
                                                 </p>
                                               </li>
@@ -326,7 +354,7 @@ const handleCategoryClick =(category, section, item, close) => {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  {true ? (
+                  {auth.user?.fname ? (
                     <div>
                       <Avatar
                         className='text-white'
@@ -341,7 +369,7 @@ const handleCategoryClick =(category, section, item, close) => {
                           cursor: "pointer",
                         }}
                       >
-                        A
+                        {auth.user?.fname[0].toUpperCase()}
                       </Avatar>
 
                       <Menu
@@ -357,56 +385,57 @@ const handleCategoryClick =(category, section, item, close) => {
                         >
                           Profile
                         </MenuItem>
-                        
-                        <MenuItem onClick={()=> navigate("/account/order")}>
-                        My orders
+
+                        <MenuItem onClick={() => navigate("/account/order")}>
+                          My orders
                         </MenuItem>
 
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        Logout
-                      </MenuItem>
+                        <MenuItem onClick={handleLogout}>
+                          Logout
+                        </MenuItem>
 
                       </Menu>
-                      
-                      </div>
+
+                    </div>
 
                   ) : (
 
                     <Button
-                    onClick={handleOpen}
-                    className='text-sm font-medium text-gray-700 hover:text-gray-800'
+                      onClick={handleOpen}
+                      className='text-sm font-medium text-gray-700 hover:text-gray-800'
                     >
-                        Sign in
+                      Sign in
                     </Button>
 
                   )}
 
-                    </div>
-                
-                {/* Search */}
-                  <div className="flex lg:ml-6">
-                    <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
-                      <span className="sr-only">Search</span>
-                      <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
-                    </a>
-                  </div>
+                </div>
 
-                  {/* Cart */}
-                  <div className="ml-4 flow-root lg:ml-6">
-                    <a href="#" className="group -m-2 flex items-center p-2">
-                      <ShoppingBagIcon
-                        className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
-                      <span className="sr-only">items in cart, view bag</span>
-                    </a>
-                  </div>
+                {/* Search */}
+                <div className="flex lg:ml-6">
+                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                    <span className="sr-only">Search</span>
+                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
+                  </a>
+                </div>
+
+                {/* Cart */}
+                <div className="ml-4 flow-root lg:ml-6">
+                  <a href="#" className="group -m-2 flex items-center p-2">
+                    <ShoppingBagIcon
+                      className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      aria-hidden="true"
+                    />
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                    <span className="sr-only">items in cart, view bag</span>
+                  </a>
                 </div>
               </div>
             </div>
+          </div>
         </nav>
       </header>
+      <AuthModal handleClose={handleClose} open={openAuthModel} />
     </div>
   )
 }
