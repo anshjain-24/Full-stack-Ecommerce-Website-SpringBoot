@@ -41,7 +41,7 @@ public class Product {
     @Column(name="sizes")
     private Set<Size> sizes = new HashSet<>();
 
-    @Column(name = "image_url")
+    @Column(name = "image_Url")
     private String imageUrl;
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)

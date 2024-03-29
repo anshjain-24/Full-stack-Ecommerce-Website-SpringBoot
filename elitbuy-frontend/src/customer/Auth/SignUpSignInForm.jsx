@@ -59,11 +59,6 @@
 //                 Sign in
 //               </button>
 //               <p>
-//                 <b>
-//                  Forgot password?
-//                 </b>
-//               </p>
-//               <p>
 //                 <span>
 //                  Don't have an account?
 //                 </span>
@@ -75,7 +70,6 @@
 //           </div>
 //         </div>
 //       </div>
-//       {/* Content section omitted for brevity */}
 //     </div>
 //  );
 // };

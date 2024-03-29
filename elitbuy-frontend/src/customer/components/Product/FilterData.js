@@ -15,18 +15,17 @@ export const filters=[
         name:'Color',
         options: [
             { value: "White", label: "White" },
-            { value: "Beige", label: "Beige" },
+            { value: "Black", label: "Black" },
             { value: "Blue", label: "Blue" },
-            { value: "Brown", label: "Brown" },
-            { value: "Green", label: "Green" },
-            { value: "Purple", label: "Purple" },
+            { value: "Navy Blue", label: "Navy Blue" },
+            { value: "Royal Blue", label: "Royal Blue" },
             { value: "Yellow", label: "Yellow" }
         ],
     },
     {
         
         id:'size',
-        name:'size',
+        name:'Size',
         options:[
             {value: "S", label: "S" },
             {value: "M", label: "M" },
