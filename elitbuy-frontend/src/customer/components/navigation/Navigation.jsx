@@ -9,9 +9,15 @@ import AuthModal from '../../Auth/AuthModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, logout } from '../../../State/Auth/Action'
 import { store } from '../../../State/Store'
+import React from 'react';
 
-
-
+export function HeroiconsOutlineHome(props) {
+	return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" {...props}>
+       <path fill="none" stroke="#673ab7" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m3 12l2-2m0 0l7-7l7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6"></path>
+    </svg>
+   );
+}
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -25,9 +31,10 @@ export default function Navigation() {
   const [anchorEl, setAnchorEL] = useState(false);
   const openUserMenu = Boolean(anchorEl);
   const jwt = localStorage.getItem("jwt");
-  const {auth} = useSelector(store=>store)
-  const dispatch  = useDispatch();
+  const { auth } = useSelector(store => store)
+  const dispatch = useDispatch();
   const location = useLocation();
+  const {cart} = useSelector(store=>store);
 
   const handleUserClick = (event) => {
     setAnchorEL(event.currentTarget);
@@ -49,24 +56,30 @@ export default function Navigation() {
     navigate(`/${category.id}/${section.id}/${item.name}`);
     close();
   }
+  const handleCart = () => {
+    navigate(`/cart`)
+  }
+  const handleHome = () => {
+    navigate(`/`)
+  }
 
   useEffect(() => {
-    if(jwt){
-      dispatch(getUser(jwt)) 
+    if (jwt) {
+      dispatch(getUser(jwt))
     }
-  },[jwt,auth.jwt])
+  }, [jwt, auth.jwt])
 
 
-  useEffect(()=>{
-      if(auth.user){
-        handleClose()
-      }
-      if(location.pathname==='/Login' || location.pathname==='/Signup'){
-        navigate(-1)
-      }
-  },[auth.user])
+  useEffect(() => {
+    if (auth.user) {
+      handleClose()
+    }
+    if (location.pathname === '/Login' || location.pathname === '/Signup') {
+      navigate(-1)
+    }
+  }, [auth.user])
 
-  const handleLogout=()=>{
+  const handleLogout = () => {
     dispatch(logout())
     handleCloseUserMenu()
     localStorage.clear();
@@ -186,29 +199,41 @@ export default function Navigation() {
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <div className="flow-root">
-                    <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                  <div className="ml-auto flex items-center">
+                    
+                 <Button
+                      onClick={handleOpen}
+                      className='text-sm font-medium text-gray-700 hover:text-gray-800'
+                    >
                       Sign in
-                    </a>
+                    </Button>
+
+                    {/* Search */}
+                    <div className="flex lg:ml-6">
+                      <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                        <span className="sr-only">Search</span>
+                        <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
+                      </a>
+                    </div>
+
+                    {/* Cart */}
+                    <div className="ml-4 flow-root lg:ml-6">
+                      <a href="#" className="group -m-2 flex items-center p-2">
+                        <ShoppingBagIcon
+                          className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                          aria-hidden="true"
+                        />
+                        <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                        <span className="sr-only">items in cart, view bag</span>
+                      </a>
+                    </div>
                   </div>
-                  <div className="flow-root">
-                    <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                      Create account
-                    </a>
-                  </div>
+
+
                 </div>
 
-                <div className="border-t border-gray-200 px-4 py-6">
-                  <a href="#" className="-m-2 flex items-center p-2">
-                    <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
-                </div>
+
+
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -412,21 +437,32 @@ export default function Navigation() {
                 </div>
 
                 {/* Search */}
-                <div className="flex lg:ml-6">
+                {/* <div className="flex lg:ml-6">
                   <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
+                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="false" />
+                  </a>
+                </div> */}
+
+                {/* Home */}
+                <div className="ml-4 flow-root lg:ml-6">
+                  <a href="" className="group -m-2 flex items-center p-2" onClick={handleHome}>
+                    <HeroiconsOutlineHome
+                      className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                      aria-hidden="true"
+                    />
                   </a>
                 </div>
 
+
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <a href="" className="group -m-2 flex items-center p-2" onClick={handleCart}>
                     <ShoppingBagIcon
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart.cart?.totalItem}</span>
                     <span className="sr-only">items in cart, view bag</span>
                   </a>
                 </div>

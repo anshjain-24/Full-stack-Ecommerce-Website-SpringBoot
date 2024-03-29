@@ -11,6 +11,7 @@ import com.elitebuy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,8 +25,9 @@ public class CartController {
     private UserService userService;
 
     @GetMapping("/")
-    public ResponseEntity<Cart> findUserCart(@RequestHeader("Authorization") String jwt) throws UserException{
-
+    public ResponseEntity<Cart> findUserCart(@RequestHeader("Authorization") String jwt, Authentication authentication) throws UserException{
+        System.out.println("___________________");
+        System.out.println(authentication.getPrincipal());
         User user = userService.findUserProfileByJwt(jwt);
         Cart cart = cartService.findUserCart(user.getId());
 

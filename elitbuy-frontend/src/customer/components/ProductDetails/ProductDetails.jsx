@@ -1,25 +1,5 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    theme: {
-      extend: {
-        gridTemplateRows: {
-          '[auto,auto,1fr]': 'auto auto 1fr',
-        },
-      },
-    },
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
-import { useState } from 'react'
+
+import { useEffect, useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { RadioGroup } from '@headlessui/react'
 import { Box, Button, Grid, LinearProgress, Rating } from '@mui/material'
@@ -27,7 +7,10 @@ import { Girl } from '@mui/icons-material'
 import ProductReviewCard from './ProductReviewCard'
 import { mens_Tshirt } from '../../../data/men/mens_Tshirt'
 import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { findProductsById } from '../../../State/Product/Action'
+import { addItemToCart } from '../../../State/Cart/Action'
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -86,10 +69,21 @@ export default function ProductDetails() {
     const [selectedColor, setSelectedColor] = useState(product.colors[0])
     const [selectedSize, setSelectedSize] = useState(product.sizes[2])
     const navigate = useNavigate();
+    const params = useParams()
+    const dispatch = useDispatch();
+    const {products} = useSelector(store => store);
 
     const handleAddToCart=()=>{
+        const data = {productId:params.productId,size:selectedSize.name}
+        dispatch(addItemToCart(data))
         navigate("/cart")
     }
+
+    useEffect(()=>{
+        const data  = {productId:params.productId}
+        
+        dispatch(findProductsById(data))
+    },[params.productId])
 
 
     return (
@@ -133,32 +127,21 @@ export default function ProductDetails() {
                     <div className="flex flex-col items-center">
                         <div className="ovreflow-hidden rounded-lg max-w-[30rem] max-h-[35rem]">
                             <img
-                                src={product.images[0].src}
+                                src={products.product?.imageUrl}
                                 alt={product.images[0].alt}
-                                className="h-full w-full object-cover object-center"
+                                className="w-full" // Adjusts the width to fill the container
+                                style={{ height: 'calc(100% + 225px)' }} // Increases the height more than the width
                             />
                         </div>
-                        <div className="flex flex-wrap space-x-5 justify-center">
-                            {product.images.map((item) =>
 
-                                <div className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg max-w-[5rem] max-h-[5rem] mt-4">
-                                    <img
-                                        src={item.src}
-                                        alt={item.alt}
-                                        className="h-full w-full object-cover object-center"
-                                    />
-                                </div>
-
-                            )}
-                        </div>
                     </div>
 
                     {/* Product info */}
                     <div className="lg:col-span-1 maxt-auto max-w-2xl px-4 pb-16 sm:px-6 lg:max-w-7xl lg:px-8
                     lg:px-24">
                         <div className="lg:col-span-2">
-                            <h1 className="text-lg lg:text-xl font-semibold text-gray-900 ">Aero Armours</h1>
-                            <h1 className='text-lg lg:text-xl text-gray-900 opacity-60 pt-1'>title aa jayega idhar</h1>
+                            <h1 className="text-lg lg:text-xl font-semibold text-gray-900 ">{products.product?.brand}</h1>
+                            <h1 className='text-lg lg:text-xl text-gray-900 opacity-60 pt-1'>{products.product?.title}</h1>
                         </div>
 
                         {/* Options */}
@@ -166,9 +149,9 @@ export default function ProductDetails() {
                             <h2 className="sr-only">Product information</h2>
                             <div className='flex space-x-5 items-center text-lg lg:text-xl text-gray-900 mt-6 '>
 
-                                <p className='font-semibold '> ₹1240 </p>
-                                <p className='opacity-50 line-through'>  ₹3099  </p>
-                                <p className='text-green-600 font-semibold'>  60% off </p>
+                                <p className='font-semibold '>₹{products.product?.discountedPrice}</p>
+                                <p className='opacity-50 line-through'>  ₹{products.product?.price}</p>
+                                <p className='text-green-600 font-semibold'>{products.product?.discountedPercent}% off </p>
 
 
                             </div>
@@ -257,10 +240,10 @@ export default function ProductDetails() {
                         <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
                             {/* Description and details */}
                             <div>
-                                <h3 className="sr-only">Description</h3>
+                            <h2 className="text-large font-medium text-gray-900" style={{ fontSize: '1rem', fontWeight: 'bold', color: '#1A202C' }}>Description</h2>
 
                                 <div className="space-y-6">
-                                    <p className="text-base text-gray-900">{product.description}</p>
+                                    <p className="text-base text-gray-900">{products.product?.description}</p>
                                 </div>
                             </div>
 
@@ -278,13 +261,13 @@ export default function ProductDetails() {
                                 </div>
                             </div>
 
-                            <div className="mt-10">
+                            {/* <div className="mt-10">
                                 <h2 className="text-sm font-medium text-gray-900">Details</h2>
 
                                 <div className="mt-4 space-y-6">
                                     <p className="text-sm text-gray-600">{product.details}</p>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </section>

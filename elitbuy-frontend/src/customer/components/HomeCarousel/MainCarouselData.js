@@ -6,14 +6,13 @@ import c2 from "../../../../src/data/Images/c2.jpg";
 
 export const MainCaraouselData = [
 
-    
-    {
-        image:c1,
-        path:"/women/clothing/women_saree"
-    },
     {
         image:s24,
         path:"/accessories"
+    },
+    {
+        image:c1,
+        path:"/women/clothing/women_saree"
     },
     {
         image:c2,

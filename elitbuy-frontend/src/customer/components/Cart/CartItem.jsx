@@ -4,7 +4,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import t1 from "../../../../src/data/Images/t1.jpg";
 
-const CartItem = () => {
+const CartItem = ({item}) => {
     return (
         <div className='p-5 shadow-lg border rounded-md mb-5'>
 
@@ -13,19 +13,19 @@ const CartItem = () => {
                 <div className='w-[5rem] h-[5rem] lg:w-[9rem] lg:h-[9rem]'>
 
                     <img className='w-full h-full object-cover object-top'
-                        src={t1}
+                        src={item.product.imageUrl}
                         alt='Image ?' />
                 </div>
 
                 <div className='ml-5 space-y-1'>
-                    <p className='font-semibold'> Printed Tshirt  </p>
-                    <p className='opacity-70'>  size: M, White</p>
-                    <p className='opacity-70 mt-2'>Seller : Aero Armours </p>
+                    <p className='font-semibold'> {item.product.title}  </p>
+                    <p className='opacity-70'>  size: {item.size}, {item.product.color}</p>
+                    <p className='opacity-70 mt-2'>Seller : {item.product.brand} </p>
                     <div className='flex space-x-5 items-center text-gray-900 pt-6 '>
 
-                        <p className='font-semibold '> ₹1240 </p>
-                        <p className='opacity-50 line-through'>  ₹3099  </p>
-                        <p className='text-green-600 font-semibold'>  60% off </p>
+                        <p className='font-semibold '> ₹{item.product.discountedPrice}</p>
+                        <p className='opacity-50 line-through'>  ₹{item.product.price}  </p>
+                        <p className='text-green-600 font-semibold'>  {item.product.discountedPercent}% off </p>
 
 
                     </div>
@@ -42,7 +42,7 @@ const CartItem = () => {
                     <IconButton>
                         <RemoveCircleOutlineIcon />
                     </IconButton>
-                    <span className='py-1 px-7 border rounded-sm'> 3 </span>
+                    <span className='py-1 px-7 border rounded-sm'> {item.quantity} </span>
                     
                         <IconButton sx={{color:"RGB(145 85 253)"}}>
                             <AddCircleIcon />
