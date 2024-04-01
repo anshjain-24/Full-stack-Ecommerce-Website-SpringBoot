@@ -37,6 +37,8 @@ public class Order{
 
     private double totalDiscountedPrice;
 
+    private int deliveryCharge;
+
     private Integer discount;
 
     private String orderStatus;
@@ -49,7 +51,7 @@ public class Order{
     public Order() {
     }
 
-    public Order(Long id, String orderId, User user, List<OrderItem> orderItems, LocalDateTime orderDate, LocalDateTime deliveryDate, Address shippingAddress, PaymentDetails paymentDetails, double totalPrice, double totalDiscountedPrice, Integer discount, String orderStatus, int totalItem, LocalDateTime createdAt) {
+    public Order(Long id, String orderId, User user, List<OrderItem> orderItems, LocalDateTime orderDate, LocalDateTime deliveryDate, Address shippingAddress, PaymentDetails paymentDetails, double totalPrice, double totalDiscountedPrice, Integer discount, int deliveryCharge, String orderStatus, int totalItem, LocalDateTime createdAt) {
         this.id = id;
         this.orderId = orderId;
         this.user = user;
@@ -61,6 +63,7 @@ public class Order{
         this.totalPrice = totalPrice;
         this.totalDiscountedPrice = totalDiscountedPrice;
         this.discount = discount;
+        this.deliveryCharge = deliveryCharge;
         this.orderStatus = orderStatus;
         this.totalItem = totalItem;
         this.createdAt = createdAt;
@@ -152,6 +155,14 @@ public class Order{
 
     public void setDiscount(Integer discount) {
         this.discount = discount;
+    }
+
+    public int getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public void setDeliveryCharge(int deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
     }
 
     public String getOrderStatus() {
