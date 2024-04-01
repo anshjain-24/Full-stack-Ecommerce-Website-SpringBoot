@@ -27,36 +27,42 @@ public class JwtValidator extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-		String jwt = request.getHeader(JwtConstant.JWT_HEADER);
+		String requestURL = request.getRequestURI();
+		if(requestURL.contains("/api") || requestURL.contains("/auth")){
+			String jwt = request.getHeader(JwtConstant.JWT_HEADER);
 
-		if(jwt!=null){
-			// Bearere
-			jwt = jwt.substring(7);
-			try{
+			if(jwt!=null){
+				// Bearere
+				jwt = jwt.substring(7);
+				try{
 
-				SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
+					SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
-				Claims claims = Jwts.parserBuilder().setSigningKey(key).build()
-						.parseClaimsJws(jwt).getBody();
+					Claims claims = Jwts.parserBuilder().setSigningKey(key).build()
+							.parseClaimsJws(jwt).getBody();
 
-				String email = String.valueOf(claims.get("email"));
+					String email = String.valueOf(claims.get("email"));
 
-				String authorities = String.valueOf(claims.get("authorities"));
+					String authorities = String.valueOf(claims.get("authorities"));
 
-				List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+					List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 
-				Authentication authentication = new UsernamePasswordAuthenticationToken(email,null,auths);
+					Authentication authentication = new UsernamePasswordAuthenticationToken(email,null,auths);
 
-				SecurityContextHolder.getContext().setAuthentication(authentication);
+					SecurityContextHolder.getContext().setAuthentication(authentication);
 
 
+				}
+				catch (Exception e){
+					throw new BadCredentialsException("invalid tiken...... from jwt validator");
+				}
 			}
-			catch (Exception e){
-				throw new BadCredentialsException("invalid tiken...... from jwt validator");
-			}
+			filterChain.doFilter(request,response);
 		}
-		filterChain.doFilter(request,response);
+		else {
+//			System.out.println("no need to validate token");
+			filterChain.doFilter(request,response);
+		}
 	}
 	
 	

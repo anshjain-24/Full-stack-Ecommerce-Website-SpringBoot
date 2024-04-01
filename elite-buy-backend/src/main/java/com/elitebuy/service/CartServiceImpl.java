@@ -84,6 +84,12 @@ public class CartServiceImpl implements CartService {
             totalDiscountedPrice = totalDiscountedPrice + cartItem.getDiscountedPrice();
             totalItem = totalItem + cartItem.getQuantity();
         }
+        cart.setDeliveryCharge(0);
+        if(totalDiscountedPrice < 1000){
+            cart.setDeliveryCharge((totalDiscountedPrice*2)/10);
+        }
+
+        totalDiscountedPrice = totalDiscountedPrice + cart.getDeliveryCharge();
 
         cart.setTotalDiscountedPrice(totalDiscountedPrice);
         cart.setTotalItem(totalItem);

@@ -10,13 +10,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUser, logout } from '../../../State/Auth/Action'
 import { store } from '../../../State/Store'
 import React from 'react';
+import { isAuthenticated } from '../../../utils/auth'
 
 export function HeroiconsOutlineHome(props) {
-	return (
+  return (
     <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24" {...props}>
-       <path fill="none" stroke="#673ab7" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m3 12l2-2m0 0l7-7l7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6"></path>
+      <path fill="none" stroke="#673ab7" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m3 12l2-2m0 0l7-7l7 7M5 10v10a1 1 0 0 0 1 1h3m10-11l2 2m-2-2v10a1 1 0 0 1-1 1h-3m-6 0a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1m-6 0h6"></path>
     </svg>
-   );
+  );
 }
 
 function classNames(...classes) {
@@ -34,7 +35,7 @@ export default function Navigation() {
   const { auth } = useSelector(store => store)
   const dispatch = useDispatch();
   const location = useLocation();
-  const {cart} = useSelector(store=>store);
+  const { cart } = useSelector(store => store);
 
   const handleUserClick = (event) => {
     setAnchorEL(event.currentTarget);
@@ -82,6 +83,7 @@ export default function Navigation() {
   const handleLogout = () => {
     dispatch(logout())
     handleCloseUserMenu()
+    navigate(`/`)
     localStorage.clear();
   }
 
@@ -200,8 +202,8 @@ export default function Navigation() {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="ml-auto flex items-center">
-                    
-                 <Button
+
+                    <Button
                       onClick={handleOpen}
                       className='text-sm font-medium text-gray-700 hover:text-gray-800'
                     >
@@ -454,18 +456,24 @@ export default function Navigation() {
                   </a>
                 </div>
 
-
                 {/* Cart */}
-                <div className="ml-4 flow-root lg:ml-6">
-                  <a href="" className="group -m-2 flex items-center p-2" onClick={handleCart}>
-                    <ShoppingBagIcon
-                      className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart.cart?.totalItem}</span>
-                    <span className="sr-only">items in cart, view bag</span>
-                  </a>
-                </div>
+                {isAuthenticated() ? (
+                  <div className="ml-4 flow-root lg:ml-6">
+                    <a href="" className="group -m-2 flex items-center p-2" onClick={handleCart}>
+                      <ShoppingBagIcon
+                        className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cart.cart?.cartItems.length}</span>
+                      <span className="sr-only">items in cart, view bag</span>
+                    </a>
+                  </div>
+                ) : (
+                  <div>
+                  </div>
+                )}
+
+
               </div>
             </div>
           </div>

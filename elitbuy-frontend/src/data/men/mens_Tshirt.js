@@ -41,7 +41,7 @@ export const mens_Tshirt=[
         "topLevelCategory" : "Men",
         "secondLevelCategory" : "Clothing",
         "thirdLevelCategory" : "T-shirts",
-        "Description" : "Lymio Men T-Shirts || T-Shirts for Men || Printed T Shirt || T-Shirts (B-Black)"
+        "description" : "Lymio Men T-Shirts || T-Shirts for Men || Printed T Shirt || T-Shirts (B-Black)"
     },
     
     

@@ -4,18 +4,15 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { mens_Tshirt } from '../../../data/men/mens_Tshirt'
 import ProductCard from './ProductCard'
-import { filters, singleFilter } from './FilterData'
+import { filters, singleFilter,sortOptions } from './FilterData'
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { findProducts } from '../../../State/Product/Action'
 import Pagination from '@mui/material/Pagination';
+import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 
-const sortOptions = [
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
 
 
 function classNames(...classes) {
@@ -29,7 +26,7 @@ export default function Product() {
   const navigate = useNavigate()
   const param = useParams();
   const dispatch = useDispatch();
-  const {products} = useSelector(store=>store)
+  const { products } = useSelector(store => store)
 
   const decodedQueryString = decodeURIComponent(location.search);
   const searchParams = new URLSearchParams(decodedQueryString);
@@ -41,11 +38,16 @@ export default function Product() {
   const pageNumber = searchParams.get("page") || 1;
   const stock = searchParams.get("stock");
 
-  const handlePaginationChange = (event, value) =>{
+
+  const handlePaginationChange = (event, value) => {
     const searchParams = new URLSearchParams(location.search)
-    searchParams.set("page",value)
+    searchParams.set("page", value)
     const query = searchParams.toString();
-    navigate({search:`?${query}`})
+    navigate({ search: `?${query}` })
+  }
+
+  const handleNoFilter = () =>{
+    navigate(location.pathname)
   }
 
   const handleFilter = (value, sectionId) => {
@@ -70,33 +72,44 @@ export default function Product() {
     navigate({ search: `?${query}` })
   }
 
-  const handleRadioFilterChange = (e,sectionId) => {
+  const handleSort = (event, value) => {
+    console.log("Sorting by:", value); // Debugging line
+    const searchParam = new URLSearchParams(location.search);
+    searchParam.set("sort", value);
+    const query = searchParam.toString();
+    navigate({ search: `?${query}` })
+  };
+
+
+  const handleRadioFilterChange = (e, sectionId) => {
     const searchParam = new URLSearchParams(location.search)
-    searchParam.set(sectionId,e.target.value)
+    searchParam.set(sectionId, e.target.value)
     const query = searchParam.toString();
     navigate({ search: `?${query}` })
   }
 
-  useEffect(()=> {
-    const [minPrice,maxPrice] = priceValue == null ? [0,10000] : priceValue.split("-").map(Number);
+  useEffect(() => {
+    const [minPrice, maxPrice] = priceValue == null ? [0, 1000000] : priceValue.split("-").map(Number);
 
-    const data ={ 
-      colors:colorValue || [],
-      sizes : sizeValue || [],
+    const data = {
+      colors: colorValue || [],
+      sizes: sizeValue || [],
       minPrice: minPrice || 0,
-      maxPrice: maxPrice || 10000,
-      minDiscount : discount || 0,
+      maxPrice: maxPrice || 1000000,
+      minDiscount: discount || 0,
       category: param.levelThree,
-      stock : stock,
-      sort: sortValue || "price_low",
-      pageNumber: pageNumber -1,
+      stock: stock,
+      sort: sortValue,
+      pageNumber: pageNumber - 1,
       pageSize: 6,
     }
+    console.log("data before api call : ",data)
     dispatch(findProducts(data))
+    
 
-  },[param.levelThree,
-    param.leaveOne,
-    param.levelTwo,
+  }, [param.levelThree,
+  param.leaveOne,
+  param.levelTwo,
     colorValue,
     sizeValue,
     priceValue,
@@ -105,6 +118,7 @@ export default function Product() {
     pageNumber,
     stock
   ])
+  // console.log("param : ",param);
 
   return (
     <div className="bg-white">
@@ -200,7 +214,7 @@ export default function Product() {
         </Transition.Root>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-12">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
 
             <div className="flex items-center">
@@ -226,22 +240,30 @@ export default function Product() {
                 >
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
-                      {sortOptions.map((option) => (
-                        <Menu.Item key={option.name}>
-                          {({ active }) => (
-                            <a
-                              href={option.href}
-                              className={classNames(
-                                option.current ? 'font-medium text-gray-900' : 'text-gray-500',
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm'
-                              )}
-                            >
-                              {option.name}
-                            </a>
-                          )}
-                        </Menu.Item>
-                      ))}
+                      {sortOptions.map((option) => {
+                        console.log("option : ",option); // Debugging line to log each option
+                        return (
+                          <Menu.Item key={option.name}>
+                            {({ active }) => (
+                              <button
+                                className={classNames(
+                                  option.current ? 'font-medium text-gray-900' : 'text-gray-500',
+                                  active ? 'bg-gray-100' : '',
+                                  'block px-4 py-2 text-sm'
+                                )}
+                                onClick={(e) => {
+                                  console.log("Clicked option:", option);
+                                  console.log("Query value:", option.query);
+                                  handleSort(e, option.value);
+                                 }}
+                                 
+                              >
+                                {option.name}
+                              </button>
+                            )}
+                          </Menu.Item>
+                        );
+                      })}
                     </div>
                   </Menu.Items>
                 </Transition>
@@ -249,7 +271,8 @@ export default function Product() {
 
               <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                 <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
+                {/* <Squares2X2Icon className="h-5 w-5" aria-hidden="true" /> */}
+                <FilterAltOffIcon style={{ color: 'black', fontSize: '30px' }} onClick={handleNoFilter} />
               </button>
               <button
                 type="button"
@@ -257,9 +280,9 @@ export default function Product() {
                 onClick={() => setMobileFiltersOpen(true)}
               >
                 <span className="sr-only">Filters</span>
-                <FunnelIcon className="h-5 w-5" aria-hidden="true" />
+                 <FunnelIcon className="h-5 w-5" aria-hidden="true" />
               </button>
-            </div>
+            </div> 
           </div>
 
           <section aria-labelledby="products-heading" className="pb-24 pt-6">
@@ -350,8 +373,8 @@ export default function Product() {
                                   {section.options.map((option, optionIdx) => (
 
                                     <>
-                                      <FormControlLabel onChange={(e)=> handleRadioFilterChange(e,section.id)} value={option.value} control={<Radio />} 
-                                      label={option.label} />
+                                      <FormControlLabel onChange={(e) => handleRadioFilterChange(e, section.id)} value={option.value} control={<Radio />}
+                                        label={option.label} />
                                     </>
 
 
@@ -380,7 +403,7 @@ export default function Product() {
 
           <section className='w-full px=[3.6rem]'>
             <div className='px-4 py-5 flex justify-center'>
-                <Pagination count={products.products?.totalPages} color="secondary" onChange={handlePaginationChange} />
+              <Pagination count={products.products?.totalPages} color="secondary" onChange={handlePaginationChange} />
             </div>
           </section>
 

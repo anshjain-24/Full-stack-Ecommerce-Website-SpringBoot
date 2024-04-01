@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, Modal, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close'; // Import the Close icon
-import RegisterForm from '../Auth/RegisterForm';
-import SignUpSignInForm from './SignUpSignInForm';
+import RegisterForm from '../Auth/RegisterForm';  
 import LoginForm from './LoginForm';
 import { useLocation } from 'react-router-dom';
 

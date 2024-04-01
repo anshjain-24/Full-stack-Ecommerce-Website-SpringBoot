@@ -29,18 +29,21 @@ public class Cart {
 
     private int totalDiscountedPrice;
 
+    private int deliveryCharge = 0 ;
+
     private int discount;
 
     public Cart() {
     }
 
-    public Cart(Long id, User user, Set<CartItem> cartItems, double totalPrice, int totalItem, int totalDiscountedPrice, int discount) {
+    public Cart(Long id, User user, Set<CartItem> cartItems, double totalPrice, int totalItem, int totalDiscountedPrice,int deliveryCharge, int discount) {
         this.id = id;
         this.user = user;
         this.cartItems = cartItems;
         this.totalPrice = totalPrice;
         this.totalItem = totalItem;
         this.totalDiscountedPrice = totalDiscountedPrice;
+        this.deliveryCharge = deliveryCharge;
         this.discount = discount;
     }
 
@@ -90,6 +93,14 @@ public class Cart {
 
     public void setTotalDiscountedPrice(int totalDiscountedPrice) {
         this.totalDiscountedPrice = totalDiscountedPrice;
+    }
+
+    public int getDeliveryCharge() {
+        return deliveryCharge;
+    }
+
+    public void setDeliveryCharge(int deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
     }
 
     public int getDiscount() {
