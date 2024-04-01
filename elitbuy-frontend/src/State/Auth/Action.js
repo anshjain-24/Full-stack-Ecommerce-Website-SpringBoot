@@ -34,6 +34,7 @@ export const login = (userData) => async  (dispatch) => {
         try{
             const response = await axios.post(`${API_BASE_URL}/auth/login`,userData)
             const user = response.data;
+            console.log("jwt here : ",user.jwt)
             if(user.jwt){
                 localStorage.setItem("jwt",user.jwt);
             }
@@ -49,7 +50,6 @@ export const login = (userData) => async  (dispatch) => {
 const GetUserRequest = () => ({type:GET_USER_REQUEST});
 const GetUserSuccess = (user) => ({type:GET_USER_SUCCESS,payload:user});
 const GetUserFailure = (error) => ({type:GET_USER_FAILURE,payload:error});
-
 
 
 export const getUser = (jwt) => async  (dispatch) => {

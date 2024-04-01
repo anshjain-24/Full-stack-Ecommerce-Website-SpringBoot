@@ -8,8 +8,6 @@ public class EliteBuyOnlineShoppingWebsiteApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EliteBuyOnlineShoppingWebsiteApplication.class, args);
-
-
 	}
 
 }

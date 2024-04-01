@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -23,6 +23,7 @@ public class ProductController {
                                                                       @RequestParam Integer minPrice,@RequestParam Integer maxPrice,@RequestParam Integer minDiscount ,@RequestParam String sort,@RequestParam String stock,
                                                                       @RequestParam Integer pageNumber,@RequestParam Integer pageSize) {
 
+        System.out.println("getching products");
         Page<Product> res = productService.getAllProduct(
                 category, colors, sizes, minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize);
         System.out.println("complete products");

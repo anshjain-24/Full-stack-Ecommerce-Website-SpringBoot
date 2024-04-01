@@ -2,6 +2,7 @@ import shoe from "../../../../src/data/Images/shoe.png"
 import s24 from "../../../../src/data/Images/Galaxy S24.png"
 import c1 from "../../../../src/data/Images/c1.jpg";
 import c2 from "../../../../src/data/Images/c2.jpg";
+import c3 from "../../../../src/data/Images/c3.png"
 
 
 export const MainCaraouselData = [
@@ -13,6 +14,10 @@ export const MainCaraouselData = [
     {
         image:c1,
         path:"/women/clothing/women_saree"
+    },
+    {
+        image:c3,
+        path:"/electronics/Mobile/Iphone"
     },
     {
         image:c2,

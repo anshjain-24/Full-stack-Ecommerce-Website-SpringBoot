@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -79,26 +82,52 @@ public class AuthController {
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
     }
 
+//    @PostMapping("/login")
+//    public ResponseEntity<AuthResponse>loginUserHandler(@RequestBody LoginRequest loginRequest){
+//
+//        String username = loginRequest.getEmail();
+//        String password = loginRequest.getPassword();
+//
+//        Authentication authentication = authenticate(username,password);
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        String token = jwtProvider.generateToken(authentication);
+//
+//        AuthResponse authResponse =new AuthResponse();
+//        authResponse.setJwt(token);
+//        authResponse.setMessage("Logged in Successfully");
+//
+//        return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+//    }
+
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse>loginUserHandler(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> loginUserHandler(@RequestBody LoginRequest loginRequest){
+        try {
+            String username = loginRequest.getEmail();
+            String password = loginRequest.getPassword();
 
-        String username = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
+            Authentication authentication = authenticate(username, password);
 
-        Authentication authentication = authenticate(username,password);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = jwtProvider.generateToken(authentication);
 
-        String token = jwtProvider.generateToken(authentication);
+            AuthResponse authResponse = new AuthResponse();
+            authResponse.setJwt(token);
+            authResponse.setMessage("Logged in Successfully");
 
-        AuthResponse authResponse =new AuthResponse();
-        authResponse.setJwt(token);
-        authResponse.setMessage("Logged in Successfully");
-
-        return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+            return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+        } catch (BadCredentialsException e) {
+            // Handle the case where the credentials are invalid
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Invalid username or password");
+            return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        }
     }
 
-    private Authentication authenticate(String username, String password) {
+
+    private Authentication authenticate(String username, String password) throws BadCredentialsException {
 
         UserDetails userDetails = customUserService.loadUserByUsername(username);
 

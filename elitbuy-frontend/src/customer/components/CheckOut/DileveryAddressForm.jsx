@@ -1,14 +1,21 @@
 import { Box, Button, ButtonBase, Grid, TextField } from '@mui/material'
 import React from 'react'
 import AddressCard from '../AddressCard/AddressCard'
+import { useDispatch } from 'react-redux';
+import { createOrder } from '../../../State/Order/Action';
+import { useNavigate } from 'react-router-dom';
 
 const DileveryAddressForm = () => {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleSubmit=(e)=>{
            
         e.preventDefault();
             
             const data = new FormData(e.currentTarget);
+
 
             const address = {
                 firstName:data.get("firstName"),
@@ -20,8 +27,9 @@ const DileveryAddressForm = () => {
                 MobileNo:data.get("phoneNumber")
  
             }
-
-            console.log("address ", address);
+            const orderData = {address, navigate}
+            dispatch(createOrder(orderData))
+            console.log("orderData address :  ", orderData);
     }
 
     return (

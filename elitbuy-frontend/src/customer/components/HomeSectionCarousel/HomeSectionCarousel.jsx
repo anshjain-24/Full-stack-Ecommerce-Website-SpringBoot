@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import HomeSectionCard from '../HomeSectionCard/HomeSectionCard';
 import { Button } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { api } from "../../../Config/ApiConfig"
 
-const HomeSectionCarousel = ({data,sectionName}) => {
+const HomeSectionCarousel = ({ sectionName, thirdLevelName }) => {
     const responsive = {
         0: { items: 1 },
         720: { items: 3 },
@@ -19,7 +20,24 @@ const HomeSectionCarousel = ({data,sectionName}) => {
         setSlideIndex(event.item);
     };
 
-    const items = data.map((item, index) => (
+    const [data, setData] = useState([]); // Initialize data as an empty array
+
+    useEffect(() => {
+        async function fetchProducts() {
+            try {
+                const response = await api.get(`product/products?colors=&sizes=&minPrice=0&maxPrice=10000&minDiscount=0&category=${thirdLevelName}&stock=null&sort=price_high&pageNumber=0&pageSize=12`);
+                console.log("Product data: ", response.data);
+                setData(response.data); // Set the fetched data
+            } catch (error) {
+                console.error("Error fetching product data:", error);
+                // Handle the error appropriately
+            }
+        }
+
+        fetchProducts(); // Call the function to fetch products
+    }, [thirdLevelName]);
+
+    const items = data.content?.map((item, index) => (
         <HomeSectionCard key={index} product={item} />
     ));
 
@@ -80,3 +98,7 @@ const HomeSectionCarousel = ({data,sectionName}) => {
 };
 
 export default HomeSectionCarousel;
+
+
+
+
