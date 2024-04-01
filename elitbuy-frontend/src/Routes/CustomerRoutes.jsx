@@ -10,6 +10,7 @@ import OrderDetail from '../customer/components/Order/OrderDetail';
 import Navigation from '../customer/components/navigation/Navigation';
 import Footer from '../customer/Footer/Footer';
 import PageNotFound from '../customer/components/404 page/PageNotFound';
+import PaymentSuccess from '../customer/components/Payment/PaymentSuccess';
 
 
 const CustomerRoutes = () => {
@@ -29,6 +30,8 @@ const CustomerRoutes = () => {
                 <Route path='/checkout' element={<CheckOut />}> </Route>
                 <Route path='/account/order' element={<Order />}> </Route>
                 <Route path='/account/order/:orderId' element={<OrderDetail />}> </Route>
+                <Route path='/payment/:orderId' element={<PaymentSuccess />}> </Route>
+                
 
                 <Route path='*' element={<PageNotFound />} /> {/* Catch-all route for 404 */}
 

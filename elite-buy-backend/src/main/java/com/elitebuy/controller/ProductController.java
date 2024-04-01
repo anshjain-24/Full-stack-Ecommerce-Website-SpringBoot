@@ -23,7 +23,7 @@ public class ProductController {
                                                                       @RequestParam Integer minPrice,@RequestParam Integer maxPrice,@RequestParam Integer minDiscount ,@RequestParam String sort,@RequestParam String stock,
                                                                       @RequestParam Integer pageNumber,@RequestParam Integer pageSize) {
 
-        System.out.println("getching products");
+        System.out.println("getting products");
         Page<Product> res = productService.getAllProduct(
                 category, colors, sizes, minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize);
         System.out.println("complete products");

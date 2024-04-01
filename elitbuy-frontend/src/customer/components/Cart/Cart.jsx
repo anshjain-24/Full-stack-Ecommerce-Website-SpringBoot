@@ -65,6 +65,12 @@ const Cart = () => {
                                         <span>Discount</span>
                                         <span className='text-green-600'>{discountPercentage}% off</span>
                                     </div>
+                                    
+                                    <div className=' flex justify-between pt-3  '>
+                                        <span>Total Price after discount </span>
+                                        <span className='text-green-600'>₹{cart.cart?.totalDiscountedPrice - cart.cart?.deliveryCharge}</span>
+                                    </div>
+
                                     <div className=' flex justify-between pt-3  '>
                                         <span>Delivery Charge</span>
                                         <span className='text-green-600'>₹{cart.cart?.deliveryCharge}</span>

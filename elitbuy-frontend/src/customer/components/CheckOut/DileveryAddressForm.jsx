@@ -18,13 +18,13 @@ const DileveryAddressForm = () => {
 
 
             const address = {
-                firstName:data.get("firstName"),
-                lastName:data.get("lastName"),
+                fname:data.get("firstName"),
+                lname:data.get("lastName"),
                 streetAddress:data.get("address"),
                 city:data.get("city"),
                 state:data.get("state"),
                 zipCode:data.get("zip"),
-                MobileNo:data.get("phoneNumber")
+                mobile:data.get("phoneNumber")
  
             }
             const orderData = {address, navigate}
@@ -43,9 +43,7 @@ const DileveryAddressForm = () => {
                     <div className='p-5 py-7 border-b cursor-pointer'>
 
                         <AddressCard />
-                        <Button sx={{ mt: 2, bgcolor: "RGB(145 85 253)" }} size='large' variant='contained'>
-                               Dilevery Here
-                       </Button>
+                        
 
                     </div>
 
