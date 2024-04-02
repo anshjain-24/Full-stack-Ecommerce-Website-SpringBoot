@@ -33,6 +33,15 @@ public class OrderController {
         return new ResponseEntity<Order>(order, HttpStatus.CREATED);
     }
 
+    @PostMapping("/withAddressId")
+    public ResponseEntity<Order> createReOrder(@RequestBody Long id,
+                                               @RequestHeader("Authorization") String jwt) throws UserException{
+        User user = userService.findUserProfileByJwt(jwt);
+        Order order = orderService.createOrderWithStoredAddress(user,id);
+        System.out.println("order : "+ order);
+        return new ResponseEntity<Order>(order,HttpStatus.CREATED);
+    }
+
     @GetMapping("/user")
     public ResponseEntity<List<Order>> useOrderHistory(
             @RequestHeader("Authorization") String jwt ) throws UserException{

@@ -82,6 +82,54 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    public Order createOrderWithStoredAddress(User user, Long AddressId) {
+        Address address = addressRepository.findAddressById(AddressId);
+        System.out.println("address id : "+address.getId());
+        Cart cart = cartService.findUserCart(user.getId());
+        List<OrderItem> orderItems = new ArrayList<>();
+
+        for(CartItem item : cart.getCartItems()){
+            OrderItem orderItem = new OrderItem();
+            orderItem.setPrice(item.getPrice());
+            orderItem.setProduct(item.getProduct());
+            orderItem.setQuantity(item.getQuantity());
+            orderItem.setSize(item.getSize());
+            orderItem.setUserId(item.getUserId());
+            orderItem.setDiscountedPrice(item.getDiscountedPrice());
+
+            OrderItem createdOrderItem = orderItemRepository.save(orderItem);
+
+            orderItems.add(createdOrderItem);
+        }
+        Order createdOrder = new Order();
+        createdOrder.setUser(user);
+        createdOrder.setOrderItems(orderItems);
+        createdOrder.setTotalPrice(cart.getTotalPrice());
+        createdOrder.setTotalDiscountedPrice(cart.getTotalDiscountedPrice());
+        createdOrder.setDiscount(cart.getDiscount());
+        createdOrder.setTotalItem(cart.getTotalItem());
+        createdOrder.setDeliveryCharge(cart.getDeliveryCharge());
+
+        createdOrder.setShippingAddress(address);
+        createdOrder.setOrderDate(LocalDateTime.now());
+        createdOrder.setOrderStatus("PENDING");
+        createdOrder.getPaymentDetails().setStatus("PENDING");
+        createdOrder.setCreatedAt(LocalDateTime.now());
+
+        System.out.println("order is being created");
+
+        Order savedOrder = orderRepository.save(createdOrder);
+
+        for(OrderItem item:orderItems){
+            item.setOrder(savedOrder);
+            orderItemRepository.save(item);
+        }
+
+        return savedOrder;
+    }
+
+
+    @Override
     public Order findOrderById(Long orderId) throws OrderException {
         Optional<Order> opt = orderRepository.findById(orderId);
         if(opt.isPresent()){

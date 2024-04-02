@@ -12,6 +12,8 @@ public interface OrderService {
 
     public Order createOrder(User user, Address shippingAddress);
 
+    public Order createOrderWithStoredAddress(User user, Long AddressId);
+
     public Order findOrderById(Long orderId) throws OrderException;
 
     public List<Order> userOrderHistory(Long userId);
