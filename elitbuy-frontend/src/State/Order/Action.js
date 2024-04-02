@@ -32,6 +32,36 @@ export const createOrder = (reqData) => async (dispatch) => {
     }
 };
 
+export const createReOrder = (reqData) => async (dispatch) => {
+    console.log("req data : "+reqData);
+    dispatch({type:CREATE_ORDER_REQUEST});
+    try{
+    
+        const { data } = await api.post(
+           `/api/orders/withAddressId`,
+           reqData.address.id,
+        );
+
+        if(data.id){
+            reqData.navigate({ search: `step=3&order_id=${data.id}` });
+        }
+        console.log("created order : ",data);
+        dispatch({
+            type: CREATE_ORDER_SUCCESS,
+            payload: data,
+        });
+    }
+    catch(error){
+        console.log("caught error  :  ",error);
+        dispatch({
+            type: CREATE_ORDER_FAILURE,
+            payload: error.message
+        });
+    }
+};
+
+
+
 export const getOrderById = (orderId) => async (dispatch) => {
     console.log("get order reqest of id : ",orderId);
     dispatch({type: GET_ORDER_BY_ID_REQUEST});

@@ -4,32 +4,56 @@ import AddressCard from '../AddressCard/AddressCard'
 import { useDispatch } from 'react-redux';
 import { createOrder } from '../../../State/Order/Action';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { api } from '../../../Config/ApiConfig';
 
 const DileveryAddressForm = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const handleSubmit=(e)=>{
-           
-        e.preventDefault();
-            
-            const data = new FormData(e.currentTarget);
 
 
-            const address = {
-                fname:data.get("firstName"),
-                lname:data.get("lastName"),
-                streetAddress:data.get("address"),
-                city:data.get("city"),
-                state:data.get("state"),
-                zipCode:data.get("zip"),
-                mobile:data.get("phoneNumber")
- 
+    const [data, setData] = useState([]); // Initialize data as an empty array
+
+    useEffect(() => {
+        async function fetchAddresses() {
+            try {
+                const response = await api.get(`api/address/get`);
+                console.log(" Address data: ", response.data);
+                setData(response.data); // Set the fetched data
+            } catch (error) {
+                console.error("Error fetching Address data:", error);
+                // Handle the error appropriately
             }
-            const orderData = {address, navigate}
-            dispatch(createOrder(orderData))
-            console.log("orderData address :  ", orderData);
+        } fetchAddresses(); // Call the function to fetch products
+    }, []);
+    useEffect(() => {
+        // console.log("data length : ", data.length);
+       }, [data]);
+       
+
+
+    const handleSubmit = (e) => {
+
+        e.preventDefault();
+
+        const data = new FormData(e.currentTarget);
+
+
+        const address = {
+            fname: data.get("firstName"),
+            lname: data.get("lastName"),
+            streetAddress: data.get("address"),
+            city: data.get("city"),
+            state: data.get("state"),
+            zipCode: data.get("zip"),
+            mobile: data.get("phoneNumber")
+
+        }
+        const orderData = { address, navigate }
+        dispatch(createOrder(orderData))
+        console.log("orderData address :  ", orderData);
     }
 
     return (
@@ -39,12 +63,8 @@ const DileveryAddressForm = () => {
 
                 <Grid xs={12} lg={5} className='border rounded-e-md shadow-md h-[30.5rem] overflow-y-scroll'>
 
-
                     <div className='p-5 py-7 border-b cursor-pointer'>
-
-                        <AddressCard />
-                        
-
+                        < AddressCard addresses={data}/>
                     </div>
 
                 </Grid>
@@ -95,7 +115,7 @@ const DileveryAddressForm = () => {
                                         label='City'
                                         fullWidth
                                         autoComplete='given-name'
-                                        multiline  
+                                        multiline
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
@@ -117,7 +137,7 @@ const DileveryAddressForm = () => {
                                         label='zip / Postal Code'
                                         fullWidth
                                         autoComplete='shipping postal-code'
-                                        multiline  
+                                        multiline
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
@@ -132,9 +152,9 @@ const DileveryAddressForm = () => {
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                <Button sx={{ py:1.5, mt: 2, bgcolor: "RGB(145 85 253)" }} type='submit' size='large' variant='contained'>
-                                       Dilevery Here   
-                                </Button>
+                                    <Button sx={{ py: 1.5, mt: 2, bgcolor: "RGB(145 85 253)" }} type='submit' size='large' variant='contained'>
+                                        Dilevery Here
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </form>

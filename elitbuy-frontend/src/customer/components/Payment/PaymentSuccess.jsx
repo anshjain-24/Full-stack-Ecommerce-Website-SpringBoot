@@ -13,29 +13,33 @@ const PaymentSuccess = () => {
     const [paymentStatus, setPaymentStatus] = useState();
     const { orderId } = useParams();
 
-    
 
-    //   console.log("orderId in payment success page  : ",orderId)
+
+    console.log("orderId in payment success page  : ", orderId)
 
     const dispatch = useDispatch();
     const { order } = useSelector(store => store);
 
-    console.log("order after payment success : ",order.order)
+    // console.log("order after payment success : ",order.order)
+
+    // useEffect(() => {
+    //     const urlParam = new URLSearchParams(window.location.search);
+
+    //     setPaymentId(urlParam.get("razorpay_payment_id"))
+    //     setPaymentStatus(urlParam.get("razorpay_payment_link_status"))
+    // }, [])
+
+    // useEffect(() => {
+    //     const data = { orderId, paymentId }
+    //     dispatch(getOrderById(orderId))
+    //     dispatch(updatePayment(data))
+    // }, [orderId, paymentId])
 
     useEffect(() => {
-        const urlParam = new URLSearchParams(window.location.search);
+        dispatch(getOrderById(orderId))
+    }, [orderId])
 
-        setPaymentId(urlParam.get("razorpay_payment_link_id"))
-        setPaymentStatus(urlParam.get("razorpay_payment_link_status"))
-    }, [])
-
-    useEffect(() => {
-        const data = { orderId, paymentId }
-        dispatch(getOrderById())
-        dispatch(updatePayment(data))
-    }, [orderId, paymentId])
-
-    console.log("order in here : ::: : ", order)
+    console.log("order in here :  ", order)
 
 
     return (
@@ -55,7 +59,7 @@ const PaymentSuccess = () => {
 
             <Grid container className='space-y-5 py-5 pt-20' >
 
-                {[1, 1, 1].map((item) =>
+                {order.order?.orderItems?.map((item) =>
 
                     <Grid container item className='shadow-xl rounded-md p-5'
                         sx={{ alignItems: "center", justifyContent: "space-between" }}>
@@ -64,27 +68,32 @@ const PaymentSuccess = () => {
 
                             <div className='flex items-center'>
                                 <img className='w-[5rem] h-[5rem] object-cover object-top'
-                                    src='https://www.googleapis.com/drive/v3/files/1RrElOn-51rxZcvtwytstxNPsUi-eUhfc?alt=media&key=AIzaSyAQUgAIF4uu06bSf6ZaXtZH4EWkENlkxr4' alt='img' />
+                                    src={item.product.imageUrl}
+                                    alt='img' />
 
                                 <div className='ml-5 space-y-2'>
-                                    <p>item.product.title</p>
+                                    <p>{item.product.title}</p>
                                     <div className='opacity-50 text-xs font-semibold space-x-5'>
-                                        <span>Color: item.color</span>
-                                        <span>Size: item.size</span>
+                                        <span>Color: {item.product.color}</span>
+                                        <span>Size: {item.size}</span>
                                     </div>
-                                    <p> Seller : item.product.brand </p>
-                                    <p>₹ item.price </p>
+                                    <p> Seller : {item.product.brand} </p>
+                                    <p>₹ {item.discountedPrice} </p>
                                 </div>
-
-
-
                             </div>
-
-
-
+                           
                         </Grid>
                         <Grid item>
-                            <AddressCard address={''} />
+                            <div className='space-y-3'>
+                                <p className='font-semibold'>{ order.order?.shippingAddress?.fname} { order.order?.shippingAddress?.lname}</p>
+                                <p>
+                                    { order.order?.shippingAddress?.streetAddress} <br />
+                                    { order.order?.shippingAddress?.city}, { order.order?.shippingAddress?.state} - { order.order?.shippingAddress?.zipCode}
+                                </p>
+                                <div className='space-y-1'>
+                                    <p>{ order.order?.shippingAddress?.mobile}</p>
+                                </div>
+                            </div>
                         </Grid>
 
                     </Grid>

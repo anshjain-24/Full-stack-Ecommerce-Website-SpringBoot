@@ -27,7 +27,8 @@ public class Order{
 
     private LocalDateTime deliveryDate;
 
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "shipping_address_id")
     private Address shippingAddress;
 
     @Embedded

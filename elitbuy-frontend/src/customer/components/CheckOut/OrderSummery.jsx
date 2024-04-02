@@ -39,7 +39,8 @@ const OrderSummery = () => {
     return (
         <div>
             <div className='p-5 shadow-lg rounded-s-md border'>
-                <AddressCard address={order.order?.shippingAddress} />
+                <AddressCard addresses={order.order?.shippingAddress} />
+
             </div>
             
             <div>
