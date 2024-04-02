@@ -13,10 +13,14 @@ const PaymentSuccess = () => {
     const [paymentStatus, setPaymentStatus] = useState();
     const { orderId } = useParams();
 
+    
+
     //   console.log("orderId in payment success page  : ",orderId)
 
     const dispatch = useDispatch();
     const { order } = useSelector(store => store);
+
+    console.log("order after payment success : ",order.order)
 
     useEffect(() => {
         const urlParam = new URLSearchParams(window.location.search);
