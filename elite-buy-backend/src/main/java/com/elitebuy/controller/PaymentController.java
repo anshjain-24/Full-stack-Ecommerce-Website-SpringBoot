@@ -74,10 +74,13 @@ public class PaymentController {
             res.setPayment_link_id(paymentLinkId);
             res.setPayment_link_url(paymentLinkUrl);
 
+            System.out.println("payment has been successfully done");
+
             return new ResponseEntity<PaymentLinkResponse>(res, HttpStatus.CREATED);
 
         }
         catch (Exception e){
+            System.out.println("there is some problem with payment");
             throw new RazorpayException(e.getMessage());
         }
 

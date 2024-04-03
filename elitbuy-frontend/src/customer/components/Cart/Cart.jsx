@@ -15,9 +15,18 @@ const Cart = () => {
     const dispatch = useDispatch();
     const { cart } = useSelector(store => store)
 
+    const [showPopup, setShowPopup] = useState(false);
+
     const [open, setOpen] = useState(!isAuthenticated());
 
     const handleCheckOut = () => {
+        if (cart.cart?.totalItem <= 0) {
+            setShowPopup(true);
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 5000); // 5 seconds
+            return;
+        }
         navigate("/checkout?step=2")
     }
 
@@ -34,17 +43,28 @@ const Cart = () => {
 
     useEffect(() => {
         dispatch(getCart())
-    }, [cart.updateCartItem,cart.deleteCartItem])
+    }, [cart.updateCartItem, cart.deleteCartItem])
 
     const handleClose = () => {
         setOpen(false);
         navigate(-1); // Navigate back to the previous page
     };
 
+    if (!isAuthenticated()) {
+        return (
+            <Modal open={open} onClose={handleClose}>
+                <div className="modal-container">
+                    <h2 className="modal-header">You need to log in to add this product to cart.</h2>
+                    <Button className="modal-button" onClick={handleClose}>OK</Button>
+                </div>
+            </Modal>
+        )
+    }
+
 
     return (
         <div>
-            {isAuthenticated() ? (
+            {cart.cart?.totalItem > 0 ? (
                 <div>
                     <div className='lg:grid grid-cols-3 lg:px-16 relative'>
 
@@ -65,7 +85,7 @@ const Cart = () => {
                                         <span>Discount</span>
                                         <span className='text-green-600'>{discountPercentage}% off</span>
                                     </div>
-                                    
+
                                     <div className=' flex justify-between pt-3  '>
                                         <span>Total Price after discount </span>
                                         <span className='text-green-600'>₹{cart.cart?.totalDiscountedPrice - cart.cart?.deliveryCharge}</span>
@@ -87,14 +107,64 @@ const Cart = () => {
 
                         </div>
                     </div>
+                    {showPopup && (
+                        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-white border border-gray-300 rounded-lg p-4 shadow-lg">
+                            <p className="text-gray-800">Cart is Empty..Please add products to cart.</p>
+                        </div>
+                    )}
                 </div>
+
             ) : (
-                <Modal open={open} onClose={handleClose}>
-                    <div className="modal-container">
-                        <h2 className="modal-header">You need to log in to add this product to cart.</h2>
-                        <Button className="modal-button" onClick={handleClose}>OK</Button>
+
+                <div>
+                    <div className='lg:grid grid-cols-3 lg:px-16 relative'>
+
+                        <div className='col-span-2 ml-40 mt-40'>
+                            There is no product in your cart
+                        </div>
+                        <div className='px-5 sticky top-0 h-[100vh] mt-5 lg:mt-0'>
+
+                            <div className='border'>
+                                <p className='uppercase font-bold opacity-60 pb-0 mb-5 text-center mt-5'>Price Details</p>
+                                <hr />
+                                <div className='space-y-3 font-semibold ml-5 mr-5 '>
+                                    <div className=' flex justify-between pt-3 text-black'>
+                                        <span>Price</span>
+                                        <span>₹{cart.cart?.totalPrice}</span>
+                                    </div>
+                                    <div className=' flex justify-between pt-3 '>
+                                        <span>Discount</span>
+                                        <span className='text-green-600'>{discountPercentage}% off</span>
+                                    </div>
+
+                                    <div className=' flex justify-between pt-3  '>
+                                        <span>Total Price after discount </span>
+                                        <span className='text-green-600'>₹{cart.cart?.totalDiscountedPrice - cart.cart?.deliveryCharge}</span>
+                                    </div>
+
+                                    <div className=' flex justify-between pt-3  '>
+                                        <span>Delivery Charge</span>
+                                        <span className='text-green-600'>₹{cart.cart?.deliveryCharge}</span>
+                                    </div>
+                                    <div className=' flex justify-between pt-3 font-bold'>
+                                        <span>Total Amount</span>
+                                        <span className='text-green-600'>₹{cart.cart?.totalDiscountedPrice}</span>
+                                    </div>
+                                </div>
+                                <Button onClick={handleCheckOut} variant='contained' className='w-full mt-5' sx={{ px: "2.5rem", py: ".7rem", bgcolor: "#9155fd", mt: "2rem" }}>
+                                    Proceed to Checkout
+                                </Button>
+                            </div>
+
+                        </div>
                     </div>
-                </Modal>
+                    {showPopup && (
+                        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-white border border-gray-300 rounded-lg p-4 shadow-lg">
+                            <p className="text-gray-800">Cart is Empty..Please add products to cart.</p>
+                        </div>
+                    )}
+                </div>
+                
             )}
         </div >
 
