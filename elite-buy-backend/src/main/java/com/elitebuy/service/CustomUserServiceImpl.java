@@ -25,12 +25,11 @@ public class CustomUserServiceImpl implements UserDetailsService {
 
         com.elitebuy.model.User user = userRepository.findByEmail(username);
         if(user==null){
-            throw new UsernameNotFoundException("user not found with given email - "+username);
+            return  null;
+//            throw new UsernameNotFoundException("user not found with given email - "+username);
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-
-
 
         return new User(user.getEmail(),user.getPassword(),authorities);
     }

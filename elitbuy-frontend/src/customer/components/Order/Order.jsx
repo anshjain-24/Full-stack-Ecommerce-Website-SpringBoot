@@ -1,9 +1,10 @@
 import { Button, Grid, Modal } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OrderCard from './OrderCard'
 import './../Cart/modal_style.css'
 import { isAuthenticated } from "../../../utils/auth"
 import { useNavigate } from 'react-router-dom'
+import { api } from '../../../Config/ApiConfig'
 
 const orderStatus = [
     { label: "On The Way", value: "on_the_way" },
@@ -18,6 +19,23 @@ const Order = () => {
 
     const navigate = useNavigate();
     const [open, setOpen] = useState(!isAuthenticated());
+
+    const [data, setData] = useState([]); // Initialize data as an empty array
+
+    useEffect(() => {
+        async function fetchUserOrders() {
+            try {
+                const response = await api.get(`api/orders/user`);
+                console.log("Product data: ", response.data);
+                setData(response.data); // Set the fetched data
+            } catch (error) {
+                console.error("Error fetching product data:", error);
+                // Handle the error appropriately
+            }
+        }
+
+        fetchUserOrders(); // Call the function to fetch products
+    }, []);
 
     const handleClose = () => {
         setOpen(false);
@@ -37,7 +55,11 @@ const Order = () => {
                             <div className='h-auto shadow-md bg-white p-t sticky top-5 ml-10'>
 
                                 <h1 className='font-bold text-lg p-2 ml-2'>Filter</h1>
-
+                                {data.map((order)=> (
+                                    <div>
+                                        {order.id}
+                                        </div>
+                                ))}
                                 <div className='space-y-4 mt-6 p-2'>
 
                                     <h1 className='font-semibold '> Order Status </h1>

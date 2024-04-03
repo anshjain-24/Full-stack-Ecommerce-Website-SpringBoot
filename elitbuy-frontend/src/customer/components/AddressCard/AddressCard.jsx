@@ -27,7 +27,6 @@ const AddressCard = ({ addresses }) => {
 
   return (
     <div>
-      
       {addresses.length > 0 ? (
         addresses.map((address, index) => (
           <div key={index} className='border rounded p-4 mb-4 shadow bg-white'>
