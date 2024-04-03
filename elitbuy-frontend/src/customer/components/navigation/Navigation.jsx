@@ -43,7 +43,8 @@ export default function Navigation() {
 
   const handleCloseUserMenu = () => {
     setAnchorEL(null);
-  }
+    setOpen(false); // Explicitly set open to false
+  };
 
   const handleOpen = () => {
     setOpenAuthModel(true);
@@ -63,6 +64,16 @@ export default function Navigation() {
   const handleHome = () => {
     navigate(`/`)
   }
+
+  // Function to close user menu when navigation changes
+  const handleNavigation = () => {
+    handleCloseUserMenu();
+  };
+
+  // Add the handleNavigation function to the useEffect hook that depends on the location
+  useEffect(() => {
+    handleNavigation();
+  }, [location]);
 
   useEffect(() => {
     if (jwt) {

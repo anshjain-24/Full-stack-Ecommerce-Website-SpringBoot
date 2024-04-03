@@ -107,6 +107,7 @@ public class AuthController {
             String username = loginRequest.getEmail();
             String password = loginRequest.getPassword();
 
+
             Authentication authentication = authenticate(username, password);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -121,7 +122,9 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             // Handle the case where the credentials are invalid
             Map<String, String> errorResponse = new HashMap<>();
+            System.out.println("invalid username or password");
             errorResponse.put("error", "Invalid username or password");
+
             return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
         }
     }
@@ -132,9 +135,11 @@ public class AuthController {
         UserDetails userDetails = customUserService.loadUserByUsername(username);
 
         if(userDetails==null){
+            System.out.println("invalid username......");
             throw new BadCredentialsException("Invalid Username");
         }
         if(!passwordEncoder.matches(password,userDetails.getPassword())){
+            System.out.println("invalid password......");
             throw new BadCredentialsException("Invalid Password");
         }
 
