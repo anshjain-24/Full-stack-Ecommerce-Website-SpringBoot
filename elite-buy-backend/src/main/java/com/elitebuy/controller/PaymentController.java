@@ -95,6 +95,7 @@ public class PaymentController {
                 order.getPaymentDetails().setPaymentId(paymentId);
                 order.getPaymentDetails().setStatus("COMPLETED");
                 order.setOrderStatus("PLACED");
+                System.out.println("order has been placed successfully , orderId : "+orderId);
                 orderRepository.save(order);
             }
             ApiResponse res = new ApiResponse();
