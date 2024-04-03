@@ -20,20 +20,20 @@ const PaymentSuccess = () => {
     const dispatch = useDispatch();
     const { order } = useSelector(store => store);
 
-    // console.log("order after payment success : ",order.order)
+    console.log("order after payment success : ",order.order)
 
-    // useEffect(() => {
-    //     const urlParam = new URLSearchParams(window.location.search);
+    useEffect(() => {
+        const urlParam = new URLSearchParams(window.location.search);
 
-    //     setPaymentId(urlParam.get("razorpay_payment_id"))
-    //     setPaymentStatus(urlParam.get("razorpay_payment_link_status"))
-    // }, [])
+        setPaymentId(urlParam.get("razorpay_payment_id"))
+        setPaymentStatus(urlParam.get("razorpay_payment_link_status"))
+    }, [])
 
-    // useEffect(() => {
-    //     const data = { orderId, paymentId }
-    //     dispatch(getOrderById(orderId))
-    //     dispatch(updatePayment(data))
-    // }, [orderId, paymentId])
+    useEffect(() => {
+        const data = { orderId, paymentId }
+        dispatch(getOrderById(orderId))
+        dispatch(updatePayment(data))
+    }, [orderId, paymentId])
 
     useEffect(() => {
         dispatch(getOrderById(orderId))
