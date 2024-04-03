@@ -27,7 +27,6 @@ const AddressCard = ({ addresses }) => {
 
   return (
     <div>
-      <h2 className="text-md font-medium mb-4">You may want to use any of the following addresses:</h2>
       {addresses.length > 0 ? (
         addresses.map((address, index) => (
           <div key={index} className='border rounded p-4 mb-4 shadow bg-white'>

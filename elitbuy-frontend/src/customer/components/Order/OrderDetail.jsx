@@ -80,7 +80,7 @@ const OrderDetail = () => {
       ) : (
         <Modal open={open} onClose={handleClose}>
           <div className="modal-container">
-            <h2 className="modal-header">You need to log in to add this product to cart.</h2>
+            <h2 className="modal-header">You need to log in to order products.</h2>
             <Button className="modal-button" onClick={handleClose}>OK</Button>
           </div>
         </Modal>

@@ -1,0 +1,29 @@
+.login-form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .error-message {
+    color: #ff0000;
+    margin-top: 0.5rem;
+  }
+  
+  /* Add animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Apply animation to error message */
+  .error-message {
+    animation: fadeIn 0.5s ease;
+  }
+  
