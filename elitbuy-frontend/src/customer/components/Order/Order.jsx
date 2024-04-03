@@ -55,11 +55,7 @@ const Order = () => {
                             <div className='h-auto shadow-md bg-white p-t sticky top-5 ml-10'>
 
                                 <h1 className='font-bold text-lg p-2 ml-2'>Filter</h1>
-                                {data.map((order)=> (
-                                    <div>
-                                        {order.id}
-                                        </div>
-                                ))}
+                                
                                 <div className='space-y-4 mt-6 p-2'>
 
                                     <h1 className='font-semibold '> Order Status </h1>
@@ -83,7 +79,7 @@ const Order = () => {
 
                         <Grid item xs={9} >
                             <div className='space-y-5'>
-                                {[1, 1, 1, 1, 1].map((item) => <OrderCard />)}
+                                {data.map((item) => <OrderCard order={item}/>)}
                             </div>
 
 

@@ -5,7 +5,6 @@ import { getOrderById } from '../../../State/Order/Action';
 import { updatePayment } from '../../../State/Payment/Action';
 import { Alert, AlertTitle, Button, Grid, Modal } from '@mui/material';
 import OrderTracker from '../Order/OrderTracker';
-import AddressCard from '../AddressCard/AddressCard';
 import { isAuthenticated } from '../../../utils/auth';
 import '../Payment/paymentSuccessStyle.css'
 
@@ -16,7 +15,7 @@ const PaymentSuccess = () => {
     const { orderId } = useParams();
     const navigate = useNavigate();
 
-
+    const [open, setOpen] = useState(!isAuthenticated());
 
     console.log("orderId in payment success page  : ", orderId)
 

@@ -18,7 +18,7 @@ export const updatePayment = (reqData) => async (dispatch) => {
     dispatch({ type: UPDATE_PAYMENT_REQUEST })
     try {
         const { data } = await api.get(
-            `/api/payments/?payment_id=${reqData.paymentId}&order_id=${reqData.orderId}`
+            `/api/payments?payment_id=${reqData.paymentId}&order_id=${reqData.orderId}`
             );
             console.log("update payment : - ",data)
 
