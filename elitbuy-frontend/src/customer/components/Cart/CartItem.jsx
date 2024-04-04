@@ -2,7 +2,6 @@ import { Button, IconButton } from '@mui/material'
 import React from 'react'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import t1 from "../../../../src/data/Images/t1.jpg";
 import {useDispatch} from 'react-redux';
 import { removeCartItem, updateCartItem } from '../../../State/Cart/Action';
 

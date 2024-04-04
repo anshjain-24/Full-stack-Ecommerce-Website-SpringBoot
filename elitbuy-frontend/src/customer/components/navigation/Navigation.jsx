@@ -83,6 +83,10 @@ export default function Navigation() {
 
 
   useEffect(() => {
+    if(auth.user && auth.user?.role == 'admin'){
+      handleClose()
+      navigate("/admin")
+    }
     if (auth.user) {
       handleClose()
     }

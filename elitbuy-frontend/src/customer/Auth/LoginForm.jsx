@@ -32,6 +32,12 @@ const LoginForm = () => {
     console.log(error);
     if (error) {
       setErrorMessage(mapErrorMessage(error));
+      const timeoutId = setTimeout(() => {
+        setErrorMessage('');
+      }, 3000); // Clear error message after 3 seconds
+
+      // Cleanup function to clear the timeout when the component unmounts
+      return () => clearTimeout(timeoutId);
     }
   }, [error]);
 
