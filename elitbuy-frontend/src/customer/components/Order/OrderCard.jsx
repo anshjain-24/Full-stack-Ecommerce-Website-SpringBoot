@@ -31,7 +31,9 @@ const OrderCard = ({order}) => {
                 <Grid item xs={4}>
 
                     <div className='flex cursor-pointer'>
-                        <img className='w-[5rem] h-[5rem] object-cover object-top' src="https://www.googleapis.com/drive/v3/files/1VWK1_pJtFimFxvmJQiwTmH_gFHZBp9e1?alt=media&key=AIzaSyAQUgAIF4uu06bSf6ZaXtZH4EWkENlkxr4"
+                        <img className='w-[5rem] h-[5rem] object-cover object-top' 
+                        src="https://www.googleapis.com/drive/v3/files/1VWK1_pJtFimFxvmJQiwTmH_gFHZBp9e1?alt=media&key=AIzaSyAQUgAIF4uu06bSf6ZaXtZH4EWkENlkxr4"
+                        // src='http://drive.google.com/uc?export=download&id=1VWK1_pJtFimFxvmJQiwTmH_gFHZBp9e1'
                             alt='' />
                         <div className='ml-5 space-y-2'>
                             <p className=''>order Id : {order.id}</p>

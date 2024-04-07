@@ -11,6 +11,8 @@ import { getUser, logout } from '../../../State/Auth/Action'
 import { store } from '../../../State/Store'
 import React from 'react';
 import { isAuthenticated } from '../../../utils/auth'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function HeroiconsOutlineHome(props) {
   return (
@@ -37,6 +39,8 @@ export default function Navigation() {
   const location = useLocation();
   const { cart } = useSelector(store => store);
 
+  const [adminFlag, setAdminFlag] = useState(false);
+
   const handleUserClick = (event) => {
     setAnchorEL(event.currentTarget);
   }
@@ -47,6 +51,7 @@ export default function Navigation() {
   };
 
   const handleOpen = () => {
+    navigate("/Login")
     setOpenAuthModel(true);
   }
 
@@ -83,22 +88,34 @@ export default function Navigation() {
 
 
   useEffect(() => {
-    if(auth.user && auth.user?.role == 'admin'){
+    if (auth.user && auth.user?.role == 'admin') {
       handleClose()
-      navigate("/admin")
+      // navigate("/admin")
+      setAdminFlag(true);
     }
     if (auth.user) {
       handleClose()
     }
     if (location.pathname === '/Login' || location.pathname === '/Signup') {
+      toast.success("Welcome to EliteBuy", {
+        position: "bottom-center" // Set the position to bottom-center
+      })
       navigate(-1)
     }
   }, [auth.user])
 
+  const handleAdmin = () => {
+    navigate("/admin")
+  }
+
   const handleLogout = () => {
     dispatch(logout())
     handleCloseUserMenu()
+    setAdminFlag(false)
     navigate(`/`)
+    toast.success("Logged out successfully", {
+      position: "bottom-center" // Set the position to bottom-center
+    })
     localStorage.clear();
   }
 
@@ -395,7 +412,20 @@ export default function Navigation() {
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                <div className=''>
+                  {adminFlag ? (
+                    <div className="">
+                      <button className="bg-indigo-600 hover:bg-gray-900 text-white font-cool py-1 px-3 rounded-md shadow-lg transition duration-300 ease-in-out mr-4"
+                        onClick={handleAdmin}>
+                        Admin Panel
+                      </button>
+
+                    </div>
+                  ) : (<div>
+                  </div>)
+                  }
+                </div>
+                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 ">
                   {auth.user?.fname ? (
                     <div>
                       <Avatar
@@ -423,10 +453,10 @@ export default function Navigation() {
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem onClick={handleCloseUserMenu}
+                        {/* <MenuItem onClick={handleCloseUserMenu}
                         >
                           Profile
-                        </MenuItem>
+                        </MenuItem> */}
 
                         <MenuItem onClick={() => navigate("/account/order")}>
                           My orders

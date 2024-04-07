@@ -6,9 +6,11 @@ import { Route, Routes } from 'react-router-dom';
 import CustomerRoutes from './Routes/CustomerRoutes';
 import AdminRouters from './Routes/AdminRouters'
 
+
 function App() {
   return (
     <div className="">
+      
       
       <Routes>
 

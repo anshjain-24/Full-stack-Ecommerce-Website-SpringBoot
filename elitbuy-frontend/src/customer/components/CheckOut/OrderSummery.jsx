@@ -35,8 +35,8 @@ const OrderSummery = () => {
 
 
     const handleCheckout = () => {
-        // dispatch(createPayment(orderId))
-        console.log("you have clicked procceed to checkout button, but the service is currently kept under maintenence and henced will not be operating for a while. thanks for understaning")
+        dispatch(createPayment(orderId))
+        // console.log("you have clicked procceed to checkout button, but the service is currently kept under maintenence and henced will not be operating for a while. thanks for understaning")
     }
 
 

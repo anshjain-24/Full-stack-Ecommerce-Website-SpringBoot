@@ -4,6 +4,8 @@ import CloseIcon from '@mui/icons-material/Close'; // Import the Close icon
 import RegisterForm from '../Auth/RegisterForm';  
 import LoginForm from './LoginForm';
 import { useLocation } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const style = {
     position: 'absolute',
@@ -21,6 +23,11 @@ const style = {
     const location = useLocation();
     return (
        <div>
+        <div>
+        <div>
+        <ToastContainer />
+      </div>
+        </div>
          <Modal
            open={open}
            onClose={handleClose}
