@@ -10,6 +10,7 @@ import { isAuthenticated } from "../../../utils/auth"
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrderById } from '../../../State/Order/Action'
+import { getUser } from '../../../State/Auth/Action'
 
 
 const OrderDetail = () => {
@@ -20,6 +21,15 @@ const OrderDetail = () => {
   const dispatch = useDispatch();
   const { order } = useSelector(store => store);
 
+  const { auth } = useSelector(store => store)
+  const jwt = localStorage.getItem("jwt");
+
+  useEffect(() => {
+    if (jwt) {
+      dispatch(getUser(jwt))
+    }
+  }, [jwt, auth.jwt])
+
   const handleClose = () => {
     setOpen(false);
     navigate(-1); // Navigate back to the previous page
@@ -28,70 +38,92 @@ const OrderDetail = () => {
   const { orderId } = useParams(); // Extract orderId from the URL
 
   useEffect(() => {
-     window.scrollTo(0, 0);
-     const data = { orderId }; // Use the extracted orderId
-     console.log("data in orderDetails : ", data);
-     // Assuming dispatch and getOrderById are defined elsewhere
-     dispatch(getOrderById(orderId));
+    window.scrollTo(0, 0);
+    const data = { orderId }; // Use the extracted orderId
+    console.log("data in orderDetails : ", data);
+    // Assuming dispatch and getOrderById are defined elsewhere
+    dispatch(getOrderById(orderId));
   }, [orderId]); // Depend on orderId to re-run the effect if it changes
   return (
 
     <div>
       {isAuthenticated() ? (
 
-        <div className='px-5 lg:px-20'>
-          <div>
-            {/* {order.order?.id} */}
-            <h1 className='font-bold text-xl py-7 '> Delivery </h1>
-            <AddressCard addresses={order.order?.shippingAddress}/>
-          </div>
+        <div>
+          {order.order?.user?.id === auth.user?.id ? (
+            <div>
+              <div className='px-5 lg:px-20'>
+                <div>
+                  {/* {order.order?.id} */}
+                  <h1 className='font-bold text-xl py-7 '> Delivery </h1>
+                  <AddressCard addresses={order.order?.shippingAddress} />
+                </div>
 
-          <div className='py-20'>
-          {order.order?.orderStatus === 'PLACED' &&( <OrderTracker activeStep={1} /> )}
-          {order.order?.orderStatus === 'SHIPPED' &&( <OrderTracker activeStep={2} /> )}
-          {order.order?.orderStatus === 'OUT FOR DELIVERY' &&( <OrderTracker activeStep={3} /> )}
-          {order.order?.orderStatus === 'DELIVERED' &&( <OrderTracker activeStep={4} /> )}
-          </div>
+                <div className='py-20'>
+                  {order.order?.orderStatus === 'PLACED' && (<OrderTracker activeStep={1} />)}
+                  {order.order?.orderStatus === 'SHIPPED' && (<OrderTracker activeStep={2} />)}
+                  {order.order?.orderStatus === 'OUT FOR DELIVERY' && (<OrderTracker activeStep={3} />)}
+                  {order.order?.orderStatus === 'DELIVERED' && (<OrderTracker activeStep={4} />)}
+                </div>
 
-          <Grid container className='space-y-5'>
-            {order.order?.orderItems?.map((item) =>
+                <Grid container className='space-y-5'>
+                  {order.order?.orderItems?.map((item) =>
 
-              <Grid item container className='shadow -xl rounded-md p-5 border' sx={{ alignItems: "center", justifyContent: "space-between" }}>
+                    <Grid item container className='shadow -xl rounded-md p-5 border' sx={{ alignItems: "center", justifyContent: "space-between" }}>
 
-                <Grid item xs={6}>
+                      <Grid item xs={6}>
 
-                  <div className='flex items-center space-x-4'>
-                    <img className='w-[10rem] h-[10rem] object-cover object-top'
-                      src={item.product?.imageUrl}
-                      alt='' />
+                        <div className='flex items-center space-x-4'>
+                          <img className='w-[10rem] h-[10rem] object-cover object-top'
+                            src={item.product?.imageUrl}
+                            alt='' />
 
-                    <div className='space-y-2 ml-5'>
-                      <p className='font-semibold'>  {item.product?.title} </p>
-                      <p className='space-x-5 opacity-50 text-xs font-semibold '>  <span> Color: {item.product?.color} </span> <span> Size: {item.size} </span></p>
-                      <p> Seller: {item.product?.brand}</p>
-                      <p> ₹{item.discountedPrice} </p>
-                    </div>
+                          <div className='space-y-2 ml-5'>
+                            <p className='font-semibold'>  {item.product?.title} </p>
+                            <p className='space-x-5 opacity-50 text-xs font-semibold '>  <span> Color: {item.product?.color} </span> <span> Size: {item.size} </span></p>
+                            <p> Seller: {item.product?.brand}</p>
+                            <p> ₹{item.discountedPrice} </p>
+                          </div>
 
-                  </div>
+                        </div>
+
+                      </Grid>
+
+                      <Grid item >
+
+                        {order.order?.orderStatus === 'DELIVERED' && (<Box sx={{ color: deepPurple[500] }}>
+
+                          <StarOutlineIcon sx={{ fontSize: "2.5rem" }} className='px-2 text-5xl' />
+                          <span className='text-md'>Rate & Review Product</span>
+                        </Box>)}
+
+                      </Grid>
+
+                    </Grid>
+                  )}
 
                 </Grid>
 
-                <Grid item >
+              </div>
+            </div>
+          ) : (
+            <div>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100vh',
+                fontFamily: 'Cascadia Mono SemiBold',
+                color: 'red',
+                fontSize: '24px'
+              }}>
+                <div>Access Denied</div>
+                <div>This is an unauthorized access</div>
+              </div>
+            </div>
+          )}
 
-                  {order.order?.orderStatus === 'DELIVERED' &&( <Box sx={{ color: deepPurple[500] }}>
-
-                    <StarOutlineIcon sx={{ fontSize: "2.5rem" }} className='px-2 text-5xl' />
-                    <span className='text-md'>Rate & Review Product</span>
-                  </Box> )}
-
-                </Grid>
-
-              </Grid>
-            )}
-
-
-
-          </Grid>
 
         </div>
 

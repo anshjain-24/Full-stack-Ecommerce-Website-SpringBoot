@@ -2,8 +2,11 @@ package com.elitebuy.controller;
 
 import com.elitebuy.Exception.OrderException;
 import com.elitebuy.Repository.OrderRepository;
+import com.elitebuy.Repository.ProductRepository;
 import com.elitebuy.Response.ApiResponse;
 import com.elitebuy.model.Order;
+import com.elitebuy.model.OrderItem;
+import com.elitebuy.model.Product;
 import com.elitebuy.service.OrderService;
 import com.elitebuy.service.UserService;
 import com.razorpay.Payment;
@@ -16,6 +19,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -35,6 +40,9 @@ public class PaymentController {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @PostMapping("/payments/{orderId}")
     public ResponseEntity<PaymentLinkResponse> createPaymentLink(@PathVariable Long orderId,
@@ -98,6 +106,12 @@ public class PaymentController {
                 order.getPaymentDetails().setPaymentId(paymentId);
                 order.getPaymentDetails().setStatus("COMPLETED");
                 order.setOrderStatus("PLACED");
+                List<OrderItem> orderitemslist = order.getOrderItems();
+                orderitemslist.forEach(orderItem ->{
+                    Product product =  orderItem.getProduct();
+                    product.setQuantity(product.getQuantity()- orderItem.getQuantity());
+                    productRepository.save(product);
+                });
                 System.out.println("order has been placed successfully , orderId : "+orderId);
                 orderRepository.save(order);
             }
@@ -110,5 +124,4 @@ public class PaymentController {
             throw new RazorpayException(e.getMessage());
         }
     }
-
 }

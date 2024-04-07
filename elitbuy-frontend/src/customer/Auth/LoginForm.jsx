@@ -3,6 +3,8 @@ import { Button, Grid, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../State/Auth/Action';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginForm = () => {
 
@@ -12,6 +14,7 @@ const LoginForm = () => {
 
 
   const [errorMessage, setErrorMessage] = useState('');
+  
   // Selector to get error message from Redux store
   const error = useSelector(state => state.auth.error);
 
@@ -31,7 +34,9 @@ const LoginForm = () => {
   React.useEffect(() => {
     console.log(error);
     if (error) {
+      toast.error("Invalid Credentials.. Try again..")
       setErrorMessage(mapErrorMessage(error));
+      
       const timeoutId = setTimeout(() => {
         setErrorMessage('');
       }, 3000); // Clear error message after 3 seconds
@@ -100,7 +105,7 @@ const LoginForm = () => {
         </div>
       </div>
     </div>
-    
+
   )
 }
 

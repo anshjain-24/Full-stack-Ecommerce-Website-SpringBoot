@@ -11,11 +11,15 @@ import Navigation from '../customer/components/navigation/Navigation';
 import Footer from '../customer/Footer/Footer';
 import PageNotFound from '../customer/components/404 page/PageNotFound';
 import PaymentSuccess from '../customer/components/Payment/PaymentSuccess';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CustomerRoutes = () => {
     return (
         <div>
+            <div>
+                <ToastContainer/>
+            </div>
             <div>
                 <Navigation />
             </div>

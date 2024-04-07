@@ -12,7 +12,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div style={{backgroundColor:'black', width:'100%'}}>
+    <div style={{backgroundColor:'black', width:'100%', height:'100vh',color:'white'}}>
       <BarChart
         width={600}
         height={400}

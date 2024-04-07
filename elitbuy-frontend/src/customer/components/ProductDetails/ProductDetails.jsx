@@ -11,6 +11,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { findProductsById } from '../../../State/Product/Action'
 import { addItemToCart, getCart } from '../../../State/Cart/Action'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -99,6 +101,7 @@ export default function ProductDetails() {
             // Fetch cart data again after adding item
             dispatch(getCart());
             navigate("/cart");
+            toast.success("item added to cart")
         });
     }
 
