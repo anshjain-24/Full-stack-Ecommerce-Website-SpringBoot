@@ -7,6 +7,7 @@ import com.elitebuy.Response.ApiResponse;
 import com.elitebuy.model.Order;
 import com.elitebuy.model.OrderItem;
 import com.elitebuy.model.Product;
+import com.elitebuy.service.EmailService;
 import com.elitebuy.service.OrderService;
 import com.elitebuy.service.UserService;
 import com.razorpay.Payment;
@@ -43,6 +44,12 @@ public class PaymentController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private InvoiceController invoiceController;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/payments/{orderId}")
     public ResponseEntity<PaymentLinkResponse> createPaymentLink(@PathVariable Long orderId,
@@ -112,6 +119,10 @@ public class PaymentController {
                     product.setQuantity(product.getQuantity()- orderItem.getQuantity());
                     productRepository.save(product);
                 });
+                invoiceController.generateInvoice(order);
+                String attachmentFile = "target/invoices/invoice"+order.getId().toString()+".pdf";
+                emailService.sendInvoice(order.getUser().getEmail(),"Your Order has been placed successfully.\nyou can download the invoice attached hereby.",
+                        "Order Confirmed",attachmentFile);
                 System.out.println("order has been placed successfully , orderId : "+orderId);
                 orderRepository.save(order);
             }
