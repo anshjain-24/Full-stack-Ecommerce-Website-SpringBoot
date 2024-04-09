@@ -156,6 +156,7 @@ const AddProductForm = () => {
                     label="Image URL"
                     name="imageUrl"
                     value={productData.imageUrl}
+                    required
                     onChange={handleChange}
                     sx={{
                       '& .MuiInputBase-root': {
@@ -214,6 +215,7 @@ const AddProductForm = () => {
                     label="Title"
                     name='title'
                     value={productData.title}
+                    required
                     onChange={handleChange}
                     sx={{
                       '& .MuiInputBase-root': {
@@ -272,6 +274,7 @@ const AddProductForm = () => {
                     label="Quantity"
                     name='quantity'
                     value={productData.quantity}
+                    required
                     onChange={handleChange}
                     sx={{
                       '& .MuiInputBase-root': {
@@ -301,6 +304,7 @@ const AddProductForm = () => {
                     label="Price"
                     name="price"
                     value={productData.price}
+                    required
                     onChange={handleChange}
                     sx={{
                       '& .MuiInputBase-root': {
@@ -330,6 +334,7 @@ const AddProductForm = () => {
                     label="Discounted Price"
                     name="discountedPrice"
                     value={productData.discountedPrice}
+                    required
                     onChange={handleChange}
                     sx={{
                       '& .MuiInputBase-root': {
@@ -410,6 +415,7 @@ const AddProductForm = () => {
                     <Select
                       name="topLevelCategory"
                       value={productData.topLevelCategory}
+                      required
                       onChange={handleChange}
                       label="Top Level Category" >
                       <MenuItem value="women">Women's</MenuItem>
@@ -446,6 +452,7 @@ const AddProductForm = () => {
                     <Select
                       name="secondLevelCategory"
                       value={productData.secondLevelCategory}
+                      required
                       onChange={handleChange}
                       label="Second Level Category" >
                       {getSecondLevelCategoryOptions().map((option, index) => (
@@ -460,6 +467,7 @@ const AddProductForm = () => {
                     label="Third Level Category"
                     name="thirdLevelCategory"
                     value={productData.thirdLevelCategory}
+                    required
                     onChange={handleChange}
                     sx={{
                       '& .MuiInputBase-root': {

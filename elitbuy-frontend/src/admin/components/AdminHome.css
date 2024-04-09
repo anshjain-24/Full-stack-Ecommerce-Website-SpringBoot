@@ -1,0 +1,55 @@
+.admin-home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    height: 100vh;
+    color: white;
+}
+
+.text-container {
+    text-align: center;
+}
+
+.elite-buy,
+.admin-panel {
+    font-size: 5rem; /* Adjust font size as desired */
+    font-family: 'Arial', sans-serif; /* Choose your preferred font */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
+    opacity: 0;
+    background: linear-gradient(to right, #666666, #eeeeee); /* Gradient color with dark and light gray */
+    -webkit-background-clip: text; /* Clip text to background */
+    -webkit-text-fill-color: transparent; /* Make text transparent */
+}
+
+.elite-buy {
+    animation: slideIn 1s forwards; /* Animation for "ELITE BUY" */
+}
+
+.admin-panel {
+    animation: fadeInRightToLeft 1s forwards; /* Animation for "ADMIN PANEL" */
+    font-size: 2.5rem; /* Adjust font size as desired */
+    margin-top: -1rem; /* Adjust spacing */
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInRightToLeft {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

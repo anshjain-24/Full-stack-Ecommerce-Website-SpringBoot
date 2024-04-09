@@ -28,12 +28,13 @@ const HomeSectionCarousel = ({ sectionName, thirdLevelName }) => {
                 const response = await api.get(`product/products?colors=&sizes=&minPrice=0&maxPrice=10000&minDiscount=0&category=${thirdLevelName}&stock=null&sort=price_high&pageNumber=0&pageSize=12`);
                 console.log("Product data: ", response.data);
                 setData(response.data); // Set the fetched data
+                // console.log("data : :  : ",response.data?.content)
             } catch (error) {
                 console.error("Error fetching product data:", error);
                 // Handle the error appropriately
             }
         }
-
+       
         fetchProducts(); // Call the function to fetch products
     }, [thirdLevelName]);
 
