@@ -22,6 +22,7 @@ public class User {
 
     private String email;
 
+    @Column(name = "role", nullable = false, columnDefinition = "varchar(255) default 'user'")
     private String role;
 
     private String mobile;

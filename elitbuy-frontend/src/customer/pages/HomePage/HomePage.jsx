@@ -15,8 +15,8 @@ const HomePage = () => {
 
             <div className="space-y-10 py-20 flex flex-col justify-center px-5 lg:px-10">
                 <HomeSectionCarousel sectionName={"Men's Tshirts"} thirdLevelName={"T-shirts"}/>
-                <HomeSectionCarousel sectionName={"Men's Tshirts"} thirdLevelName={"T-shirts"}/>
-                <HomeSectionCarousel sectionName={"Men's Tshirts"} thirdLevelName={"T-shirts"}/>
+                <HomeSectionCarousel sectionName={"Women's Tops"} thirdLevelName={"Top"}/>
+                <HomeSectionCarousel sectionName={"Iphones"} thirdLevelName={"Iphone"}/>
                 <HomeSectionCarousel sectionName={"Men's Tshirts"} thirdLevelName={"T-shirts"}/>
                 <HomeSectionCarousel sectionName={"Men's Tshirts"} thirdLevelName={"T-shirts"}/>
                 {/* <HomeSectionCarousel sectionName={"Women's Tops"} thirdLevelName={"Top"}/>

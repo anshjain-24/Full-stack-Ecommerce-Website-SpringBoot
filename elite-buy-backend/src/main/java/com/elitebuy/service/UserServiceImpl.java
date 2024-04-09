@@ -2,10 +2,12 @@ package com.elitebuy.service;
 
 import com.elitebuy.Exception.UserException;
 import com.elitebuy.configuration.JwtProvider;
+import com.elitebuy.model.Order;
 import com.elitebuy.model.User;
 import com.elitebuy.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +40,10 @@ public class UserServiceImpl implements UserService {
             throw new UserException("User not found with email : "+email);
         }
         return user;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

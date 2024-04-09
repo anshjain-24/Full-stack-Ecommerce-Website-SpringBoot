@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -23,6 +25,12 @@ public class UserController {
         User user = userService.findUserProfileByJwt(jwt);
 
         return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getAllUsers(){
+        List<User> allUsers = userService.getAllUsers();
+        return new ResponseEntity<List<User>>(allUsers,HttpStatus.ACCEPTED);
     }
 
 }
