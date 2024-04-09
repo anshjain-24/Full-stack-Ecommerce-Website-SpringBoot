@@ -15,6 +15,7 @@ import { FormControlLabel, Radio, RadioGroup } from '@mui/material'; // Import R
 import { filters, singleFilter, sortOptions } from './FilterOptions'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 const Products = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -40,7 +41,6 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = () => {
       const data = {
-        // Include other filters and pagination as needed
         sort: sortValue,
       };
       dispatch(findProducts(data));
@@ -92,22 +92,35 @@ const Products = () => {
   return (
     <div className='flex w-full h-full overflow-hidden'>
       {/* Filter options */}
-      <div className='p-4 w-1/5 flex flex-col' style={{ backgroundColor: 'gray', minHeight: '100vh', overflow: 'hidden', flex: 'none' }}>
+      <div className='p-4 w-1/5 flex flex-col' style={{ backgroundColor: '#34393B', minHeight: '100vh', overflow: 'hidden', flex: 'none' }}>
         {/* Filter options */}
         <div className='m-2 p-1 flex items-center justify-between fixed'>
-          <div className='p-2 pr-6' style={{ backgroundColor: 'lightgray' }} >
+          <div className='p-2 pr-6' style={{
+            fontWeight: 'bold',
+            color: '#666',
+            fontSize: '1.2rem', // 2x bigger font size
+            width: '200%', // Increased width
+          }}>
             Filter Options
           </div>
+
+
           {/* FilterAltOffIcon button */}
           <div className="ml-6">
             <button type="button">
               <span className="sr-only">View grid</span>
-              <FilterAltOffIcon style={{ color: 'black', fontSize: '30px' }} onClick={handleNoFilter} />
+              <FilterAltOffIcon style={{ color: 'white', fontSize: '30px' }} onClick={handleNoFilter} />
             </button>
           </div>
         </div>
         {/* Sorting options */}
-        <div className="bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none p-2 mt-20 mr-5 fixed">
+       
+        <div className='p-2 pr-6 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none p-2 mt-20 mr-5 fixed' style={{
+            fontWeight: 'bold',
+            color: 'white',
+            fontSize: '1.2rem', // 2x bigger font size
+            width: '200%', // Increased width
+          }}>
           <RadioGroup value={sortValue} onChange={(e) => handleSort(e.target.value)}>
             {sortOptions.map((option) => (
               <FormControlLabel
@@ -148,8 +161,8 @@ const Products = () => {
                   >
                     <TableCell align='center' component="th" scope="row" sx={{ color: 'white' }}>
                       <Avatar>
-                        {/* <img src={row?.imageUrl} alt="Product" /> */}
-                        <img />
+                        <img src={row?.imageUrl} alt="Product" />
+                        {/* <img /> */}
                       </Avatar>
                     </TableCell>
                     <TableCell align="center" sx={{ color: 'white' }}>{row.title}</TableCell>
@@ -160,8 +173,10 @@ const Products = () => {
                       <Button >Update </Button>
                     </TableCell> */}
                     <TableCell align="center" sx={{ color: 'white' }}>
-                      <div className={`rounded-full bg-[red]`} style={{ color: 'white' }}>
-                        <Button onClick={() => handleProductDelete(row.id)} sx={{ color: 'white' }}>Delete</Button>
+                      <div style={{ color: 'white' }}>
+                        <Button onClick={() => handleProductDelete(row.id)} sx={{ color: 'white' }}>
+                          <RemoveCircleOutlineIcon className={`rounded-full bg-[red]`} sx={{ padding: '2px' }} />
+                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>
