@@ -40,4 +40,13 @@ public class RatingController {
 
         return new ResponseEntity<>(ratings,HttpStatus.CREATED);
     }
+
+    @GetMapping("/product-user/{productId}/{userId}")
+    public ResponseEntity<Double> getProductRating(@PathVariable Long productId,
+                                                        @PathVariable Long userId) throws UserException,ProductException{
+
+        Double ratings = ratingService.getRetingByUserByProduct(userId,productId);
+
+        return new ResponseEntity<>(ratings,HttpStatus.CREATED);
+    }
 }

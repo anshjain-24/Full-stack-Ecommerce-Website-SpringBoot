@@ -57,7 +57,7 @@ const Users = () => {
     catch (error) {
       console.error("Error while deleting data:", error);
     }
-    toast.error("order deleted")
+    toast.error("user deleted")
   }
 
   return (
