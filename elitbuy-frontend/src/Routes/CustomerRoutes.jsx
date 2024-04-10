@@ -13,6 +13,7 @@ import PageNotFound from '../customer/components/404 page/PageNotFound';
 import PaymentSuccess from '../customer/components/Payment/PaymentSuccess';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ReviewAndRating from '../customer/components/ReviewAndRating/ReviewAndRating';
 
 const CustomerRoutes = () => {
     return (
@@ -35,7 +36,7 @@ const CustomerRoutes = () => {
                 <Route path='/account/order' element={<Order />}> </Route>
                 <Route path='/account/order/:orderId' element={<OrderDetail />}> </Route>
                 <Route path='/payment/:orderId' element={<PaymentSuccess />}> </Route>
-                
+                <Route path='/:productId/review-rating' element={<ReviewAndRating />}></Route>
 
                 <Route path='*' element={<PageNotFound />} /> {/* Catch-all route for 404 */}
 

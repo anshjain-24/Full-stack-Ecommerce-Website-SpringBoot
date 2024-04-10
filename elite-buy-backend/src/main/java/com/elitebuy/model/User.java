@@ -2,6 +2,7 @@ package com.elitebuy.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ public class User {
 
     private String email;
 
-    @Column(name = "role", nullable = false, columnDefinition = "varchar(255) default 'user'")
+    @Column(name = "role", nullable = false)
+    @ColumnDefault("'user'")
     private String role;
 
     private String mobile;

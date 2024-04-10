@@ -92,9 +92,11 @@ const OrderDetail = () => {
                       <Grid item >
 
                         {order.order?.orderStatus === 'DELIVERED' && (<Box sx={{ color: deepPurple[500] }}>
+                          <div  onClick={()=> navigate(`/${item.product?.id}/review-rating`)} >
+                            <StarOutlineIcon sx={{ fontSize: "2.5rem" }} className='px-2 text-5xl' />
+                            <span className='text-md'>Rate & Review Product</span>
 
-                          <StarOutlineIcon sx={{ fontSize: "2.5rem" }} className='px-2 text-5xl' />
-                          <span className='text-md'>Rate & Review Product</span>
+                          </div>
                         </Box>)}
 
                       </Grid>
