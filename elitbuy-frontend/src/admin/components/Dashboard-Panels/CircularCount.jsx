@@ -66,30 +66,41 @@ const CircularCount = () => {
             {Object.keys(totalCount).map((key, index) => (
                 <div key={index} className="circle-container">
                     <div className="glowing-circle">
+
                         <CircularProgressbar
                             key={`${animationKey}-${key}`}
                             value={0}
                             maxValue={totalCount[key]}
                             text={`${totalCount[key]}`}
-                            strokeWidth={5}
+                            strokeWidth={5} // Adjust the border width
                             styles={{
                                 path: {
-                                    stroke: index === 0 ? 'green' : index === 1 ? 'blue' : 'red',
+                                    stroke: index === 0 ? 'green' : index === 1 ? 'blue' : 'red', // Different lightweight colors for border
                                     strokeLinecap: 'round',
                                 },
                                 trail: {
-                                    stroke: 'rgba(255, 255, 255, 0.3)', // Gray shaded gradient
-                                    strokeWidth: 5,
+                                    stroke: index === 0 ? 'lightgreen' : index === 1 ? 'lightblue' : 'lightpink',
+                                    strokeWidth: 5, // Adjust the trail width
                                     strokeLinecap: 'round',
                                     strokeDasharray: '2000',
                                     strokeDashoffset: '0', // Start the animation from the beginning
                                     transition: 'stroke-dashoffset 10s ease-in-out', // Duration of animation
                                 },
-                                text: { fill: 'white', fontSize: '16px' }
+                                text: {
+                                    fill: index === 0 ? 'lightgreen' : index === 1 ? 'lightblue' : 'lightpink',
+                                    fontSize: '32px', // Bigger font size
+                                    fontFamily: 'Arial',
+                                    fontWeight: 'bold',
+                                    width: '100%',
+                                    height: '100%',
+                                    lineHeight: '100%',
+                                }
                             }}
                             onAnimationEnd={() => setAnimationKey(animationKey + 1)}
                             animationDuration={10000} // Adjust this value to control the speed of the animation
                         />
+
+
                         {/* Add a div to create a black circle as background */}
                         <div className="background-circle"></div>
                     </div>

@@ -48,10 +48,10 @@ const PieChartPanel = () => {
 
     return (
         <div style={{ backgroundColor: 'black', width: '100%', height: '45vh', padding: '5px', margin: "5px", fontFamily: 'Arial, sans-serif', position: 'relative' }}>
-            <div style={{ position: 'absolute', top: '10px', left: '50%', transform: 'translateX(-50%)',marginLeft:"50px",paddingLeft:"20px",marginRight:"0px", textAlign: 'right', color: '#fff', fontSize: '20px', fontWeight: 'bold' }}>
+            <div style={{ position: 'relative',right: '1%', transform: 'translateX(-50%)',marginLeft:"200px", textAlign: 'left', color: '#fff', fontSize: '20px', fontWeight: 'bold', bottom:"4px" }}>
                 Quantity of Orders by Product
             </div>
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" style={{paddingBottom:"15px", paddingLeft:"50px", marginLeft:"30px"}}>
                 <PieChart>
                     <Pie
                         data={categoryData}
