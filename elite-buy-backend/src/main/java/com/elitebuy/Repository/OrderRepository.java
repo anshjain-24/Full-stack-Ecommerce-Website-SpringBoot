@@ -12,5 +12,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o WHERE o.user.id = :userId AND (o.orderStatus = 'PLACED' OR o.orderStatus = 'CONFIRMED' OR o.orderStatus = 'SHIPPED' OR o.orderStatus = 'DELIVERED')")
     public List<Order> getUserOrders(@Param("userId") Long userId);
 
+    public void deleteByUserId(Long userId);
+
 }
  

@@ -5,13 +5,13 @@ import BarChartPanel from './Dashboard-Panels/BarChartPanel';
 import TimeSeriesPanel from './Dashboard-Panels/TimeSeriesPanel';
 import PieChartPanel from './Dashboard-Panels/PieChartPanel';
 import CircularCount from './Dashboard-Panels/CircularCount';
-import Dashboard_BG from '../../data/Images/Dashboard_BG.jpg';
-import backgroundDashBoard from '../../data/Images/backgroundDashBoard.jpg';
-import backgroundDashBoard1 from '../../data/Images/backgroundDashBoard1.jpg';
+
+import image1 from '../../data/Images/image1.jpg';
+
 const Dashboard = () => {
     return (
         <div style={{
-            backgroundImage: `url(${backgroundDashBoard1})`,
+            backgroundImage: `url(${image1})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             width: '100vw', margin: '10', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between'

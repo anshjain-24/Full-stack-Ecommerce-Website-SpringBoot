@@ -73,7 +73,7 @@ const Orders = () => {
 
   console.log(adminOrder);
   return (
-    <div className='flex w-full h-full overflow-hidden'>
+    <div className='flex w-full h-full overflow-hidden fixed'>
       {/* Filter options */}
       <div className='p-4 w-1/5 flex flex-col' style={{ backgroundColor: '#34393B', minHeight: '100vh', overflow: 'hidden', flex: 'none' }}>
         {/* Filter options */}
