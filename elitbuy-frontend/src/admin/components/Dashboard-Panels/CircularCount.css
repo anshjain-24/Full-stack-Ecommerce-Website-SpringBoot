@@ -1,0 +1,22 @@
+.circle-container {
+    width: 120px;
+}
+
+.glowing-circle {
+    position: relative;
+}
+
+.glowing-circle:hover {
+    filter: drop-shadow(0 0 10px lightblue);
+}
+
+.background-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: black;
+    z-index: -1;
+}

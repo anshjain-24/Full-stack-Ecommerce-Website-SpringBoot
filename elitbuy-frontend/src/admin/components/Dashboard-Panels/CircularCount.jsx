@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { api } from '../../../Config/ApiConfig';
+import './CircularCount.css'; // Import CSS file for styling
 
 const CircularCount = () => {
     const [orderData, setOrderData] = useState([]);
@@ -45,6 +46,15 @@ const CircularCount = () => {
         fetchUserData();
     }, []);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setAnimationKey(prevKey => prevKey + 1);
+        }, 4000); // Restart animation every 4 seconds
+
+        return () => clearInterval(interval); // Clear interval on component unmount
+
+    }, []);
+
     const totalCount = {
         orders: orderData.length,
         products: productData?.content?.length || 0,
@@ -54,28 +64,35 @@ const CircularCount = () => {
     return (
         <div className='flex justify-center' style={{ display: 'flex', paddingTop: '55px', justifyContent: 'space-around', position: 'relative', height: '40vh', width: '100vh' }}>
             {Object.keys(totalCount).map((key, index) => (
-                <div key={index} style={{ width: '120px' }}>
-                    <CircularProgressbar
-                        key={`${animationKey}-${key}`}
-                        value={0}
-                        maxValue={totalCount[key]}
-                        text={`${totalCount[key]}`}
-                        strokeWidth={5}
-                        styles={{
-                            path: {
-                                stroke: index === 0 ? 'green' : index === 1 ? 'blue' : 'red',
-                                strokeLinecap: 'round',
-                            },
-                            trail: {
-                                stroke: index === 0 ? '#9ccc65' : index === 1 ? '#64b5f6' : '#ef5350',
-                            },
-                            text: { fill: 'white', fontSize: '16px' }
-                        }}
-                        onAnimationEnd={() => setAnimationKey(animationKey + 1)}
-                        animationDuration={200000} // Adjust this value to control the speed of the animation
-                    />
-
-
+                <div key={index} className="circle-container">
+                    <div className="glowing-circle">
+                        <CircularProgressbar
+                            key={`${animationKey}-${key}`}
+                            value={0}
+                            maxValue={totalCount[key]}
+                            text={`${totalCount[key]}`}
+                            strokeWidth={5}
+                            styles={{
+                                path: {
+                                    stroke: index === 0 ? 'green' : index === 1 ? 'blue' : 'red',
+                                    strokeLinecap: 'round',
+                                },
+                                trail: {
+                                    stroke: 'rgba(255, 255, 255, 0.3)', // Gray shaded gradient
+                                    strokeWidth: 5,
+                                    strokeLinecap: 'round',
+                                    strokeDasharray: '2000',
+                                    strokeDashoffset: '0', // Start the animation from the beginning
+                                    transition: 'stroke-dashoffset 10s ease-in-out', // Duration of animation
+                                },
+                                text: { fill: 'white', fontSize: '16px' }
+                            }}
+                            onAnimationEnd={() => setAnimationKey(animationKey + 1)}
+                            animationDuration={10000} // Adjust this value to control the speed of the animation
+                        />
+                        {/* Add a div to create a black circle as background */}
+                        <div className="background-circle"></div>
+                    </div>
                     <div style={{ textAlign: 'center', marginTop: '10px', color: 'white' }}>{key}</div>
                 </div>
             ))}

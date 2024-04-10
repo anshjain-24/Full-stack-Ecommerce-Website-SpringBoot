@@ -13,6 +13,8 @@ import { findProductsById } from '../../../State/Product/Action'
 import { addItemToCart, getCart } from '../../../State/Cart/Action'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import HomeSectionCarousel from '../HomeSectionCarousel/HomeSectionCarousel'
+import ProductRatingCard from './ProductRatingCard'
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -78,11 +80,11 @@ export default function ProductDetails() {
 
     const parentCategory = products.product?.category.parentCategory.parentCategory?.name;
     useEffect(() => {
-        console.log("parent category name : ",parentCategory)
+        console.log("parent category name : ", parentCategory)
         if (parentCategory === 'electronics') {
             setSelectedSize('N/A');
         }
-    }, [parentCategory]); 
+    }, [parentCategory]);
 
     const handleAddToCart = () => {
 
@@ -120,29 +122,42 @@ export default function ProductDetails() {
             <div className="pt-6">
                 <nav aria-label="Breadcrumb">
                     <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
-                        {product.breadcrumbs.map((breadcrumb) => (
-                            <li key={breadcrumb.id}>
-                                <div className="flex items-center">
-                                    <a href={breadcrumb.href} className="mr-2 text-sm font-medium text-gray-900">
-                                        {breadcrumb.name}
-                                    </a>
-                                    <svg
-                                        width={16}
-                                        height={20}
-                                        viewBox="0 0 16 20"
-                                        fill="currentColor"
-                                        aria-hidden="true"
-                                        className="h-5 w-4 text-gray-300"
-                                    >
-                                        <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
-                                    </svg>
+
+                        <li key={""}>
+                            <div className="flex items-center">
+                                <div className="mr-2 text-sm font-medium text-gray-900">
+                                    {products?.product?.category?.parentCategory?.name}
                                 </div>
-                            </li>
-                        ))}
+                                <svg
+                                    width={16}
+                                    height={20}
+                                    viewBox="0 0 16 20"
+                                    fill="currentColor"
+                                    aria-hidden="true"
+                                    className="h-5 w-4 text-gray-300"
+                                >
+                                    <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+                                </svg>
+                                <div className="mr-2 text-sm font-medium text-gray-900">
+                                    {products?.product?.category?.parentCategory?.parentCategory?.name}
+                                </div>
+                                <svg
+                                    width={16}
+                                    height={20}
+                                    viewBox="0 0 16 20"
+                                    fill="currentColor"
+                                    aria-hidden="true"
+                                    className="h-5 w-4 text-gray-300"
+                                >
+                                    <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
+                                </svg>
+                            </div>
+                        </li>
+
                         <li className="text-sm">
-                            <a href={product.href} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
-                                {product.name}
-                            </a>
+                            <div aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
+                                {products?.product?.title}
+                            </div>
                         </li>
                     </ol>
                 </nav>
@@ -187,9 +202,7 @@ export default function ProductDetails() {
                             {/* Reviews */}
                             <div className="mt-6">
                                 <div className='flex items-center space-x-3'>
-                                    <Rating name="read-only" value={4.5} readOnly precision={0.5} />
-                                    <p className='opacity-50 text-sm'> 12422 Ratings </p>
-                                    <p className='ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500'> 534 Reviews </p>
+                                   
 
                                 </div>
 
@@ -262,7 +275,7 @@ export default function ProductDetails() {
 
                                     ) : (
                                         <div>
-                                            
+
                                         </div>
                                     )}
 
@@ -322,78 +335,19 @@ export default function ProductDetails() {
                 <section>
 
                     <h1 className='font-semibold text-lg pb-4'> Recent Rating and Reviews </h1>
-                    <div className='border p-5'>
+                    <div className='border p-5' style={{border: '', padding: '5px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'}}>
                         <Grid container spacing={7}>
 
                             <Grid item xs={7}>
                                 <div className='space-y-5'>
 
-                                    {[1, 1, 1].map((item) => <ProductReviewCard />)}
+                                    <ProductReviewCard productId={products?.product?.id} />
 
                                 </div>
                             </Grid>
 
                             <Grid item xs={5}>
-                                <h1 className='text-x1 font-semibold pb-2'> Product Rating </h1>
-
-                                <div className='flex items-center space-x-3'>
-                                    <Rating value={4.6} precision={0.5} readOnly />
-                                    <p className='opacity-60'> 23871 Ratings</p>
-                                </div>
-
-                                <Box className="mt-5 space-y-2">
-
-                                    <Grid container justifyContent="center" alignItems="center" gap={2}>
-                                        <Grid item xs={2}>
-                                            <p>  Excellent   </p>
-                                        </Grid>
-                                        <Grid item xs={7}>
-                                            <LinearProgress sx={{ bgcolor: "#dododo", borderRadius: 4, height: 7 }}
-                                                variant='determinate' value={40} color='success' />
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid container justifyContent="center" alignItems="center" gap={2}>
-                                        <Grid item xs={2}>
-                                            <p>  Good  </p>
-                                        </Grid>
-                                        <Grid item xs={7}>
-                                            <LinearProgress sx={{ bgcolor: "#dododo", borderRadius: 4, height: 7 }}
-                                                variant='determinate' value={25} color='success' />
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid container justifyContent="center" alignItems="center" gap={2}>
-                                        <Grid item xs={2}>
-                                            <p>  Avarage  </p>
-                                        </Grid>
-                                        <Grid item xs={7}>
-                                            <LinearProgress sx={{ bgcolor: "#dododo", borderRadius: 4, height: 7 }}
-                                                variant='determinate' value={15} className='bg-yellow-300' />
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid container justifyContent="center" alignItems="center" gap={2}>
-                                        <Grid item xs={2}>
-                                            <p> poor   </p>
-                                        </Grid>
-                                        <Grid item xs={7}>
-                                            <LinearProgress sx={{ bgcolor: "#dododo", borderRadius: 4, height: 7 }}
-                                                variant='determinate' value={20} color='warning' />
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid container justifyContent="center" alignItems="center" gap={2}>
-                                        <Grid item xs={2}>
-                                            <p>  Very Bad  </p>
-                                        </Grid>
-                                        <Grid item xs={7}>
-                                            <LinearProgress sx={{ bgcolor: "#dododo", borderRadius: 4, height: 7 }}
-                                                variant='determinate' value={5} color='error' />
-                                        </Grid>
-                                    </Grid>
-                                </Box>
-
+                                <ProductRatingCard productId={products?.product?.id} />
                             </Grid>
 
                         </Grid>
@@ -406,8 +360,8 @@ export default function ProductDetails() {
 
                     <h1 className='py-5 text-xl font-bold'>You May like these</h1>
 
-                    <div className='flex flex-wrap space-y-5'>
-                        {mens_Tshirt.map((item) => <HomeSectionCard product={item} />)}
+                    <div className="space-y-10 py-20 flex flex-col justify-center px-5 lg:px-10">
+                        <HomeSectionCarousel sectionName={""} thirdLevelName={products.product?.category?.name} />
                     </div>
                 </section>
             </div>

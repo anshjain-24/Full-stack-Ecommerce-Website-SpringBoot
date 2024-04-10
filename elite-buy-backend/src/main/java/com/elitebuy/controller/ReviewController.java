@@ -7,6 +7,7 @@ import com.elitebuy.model.Reviews;
 import com.elitebuy.model.User;
 import com.elitebuy.service.ReviewService;
 import com.elitebuy.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,10 @@ import java.util.List;
 @RequestMapping("/api/reviews")
 public class ReviewController {
 
+    @Autowired
     private ReviewService reviewService;
 
+    @Autowired
     private UserService userService;
 
     @PostMapping("/create")
@@ -31,8 +34,8 @@ public class ReviewController {
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<List<Reviews>> getProductReview(@PathVariable Long prodcutId) throws UserException,ProductException{
-        List<Reviews> reviews = reviewService.getAllReview(prodcutId);
+    public ResponseEntity<List<Reviews>> getProductReview(@PathVariable Long productId) throws UserException,ProductException{
+        List<Reviews> reviews = reviewService.getAllReview(productId);
         return new ResponseEntity<>(reviews,HttpStatus.CREATED);
     }
 
