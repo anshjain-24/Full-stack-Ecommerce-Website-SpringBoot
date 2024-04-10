@@ -13,4 +13,6 @@ public interface UserService {
 
     public List<User> getAllUsers();
 
+    public void deleteUser(Long userId)throws UserException;
+
 }

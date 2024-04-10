@@ -11,7 +11,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import Dashboard from './components/Dashboard';
 import Products from './components/Products';
-import Customers from './components/Customers';
+import Customers from './components/Users';
 import Orders from './components/Orders';
 import AddProductForm from './components/AddProductForm';
 import AdminHome from './components/AdminHome';
@@ -23,7 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const menu = [
     { name: "Dashboard", path: "/admin/dashboard", icon: <DashboardIcon style={{ color: 'white' }} /> },
     { name: "Products", path: "/admin/products", icon: <LabelIcon style={{ color: 'white' }} /> },
-    // { name: "Customers", path: "/admin/customers", icon: <GroupIcon style={{ color: 'white' }} /> },
+    { name: "Users", path: "/admin/users", icon: <GroupIcon style={{ color: 'white' }} /> },
     { name: "Orders", path: "/admin/orders", icon: <GradingIcon style={{ color: 'white' }} /> },
     { name: "Add New Product", path: "/admin/product/create", icon: <LibraryAddIcon style={{ color: 'white' }} /> },
     { name: "Home", path: "/", icon: <LocalMallIcon style={{ color: 'white' }} /> },
@@ -162,7 +162,7 @@ const Admin = () => {
                             <Route path='/' element={<AdminHome />}></Route>
                             <Route path='/dashboard' element={<Dashboard />}></Route>
                             <Route path='/products' element={<Products />}></Route>
-                            <Route path='/customers' element={<Customers />}></Route>
+                            <Route path='/users' element={<Customers />}></Route>
                             <Route path='/orders' element={<Orders />}></Route>
                             <Route path='/product/create' element={<AddProductForm />}></Route>
                             
