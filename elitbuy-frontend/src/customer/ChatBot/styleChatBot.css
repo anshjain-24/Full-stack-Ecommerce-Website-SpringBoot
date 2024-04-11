@@ -1,0 +1,82 @@
+.card-main-box{
+    margin: 10% 2% 10% 7%;
+    padding: 0% 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+ 
+#chatbot-button {
+    position: fixed;
+    bottom: 1px;
+    right: 1px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 10%;
+}
+ 
+#chatbot-button:hover {
+    cursor: pointer;
+}
+ 
+#chatbot-button-1{
+    position: fixed;
+    bottom: 1px;
+    right: 1px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 30%;
+}
+ 
+.chatbot-btn:hover{
+    cursor: pointer;
+}
+ 
+#chatbot-button-2{
+    position: fixed;
+    bottom: 380px;
+    right: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 5%;
+    color: white;
+    z-index: 3;
+    background-color: transparent;
+}
+ 
+#chatbot-button-2:hover{
+    position: fixed;
+    bottom: 380px;
+    right: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 5%;
+    color: white;
+    z-index: 3;
+    cursor: pointer;
+}
+ 
+.chatbot-button-4{
+    position: fixed;
+    bottom: 310px;
+    right: 26px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 27%;
+    color: white;
+    z-index: 3;
+    background-color: white;
+    height: 30px;
+}
+.chatbot-button-5{
+    position: fixed;
+    bottom: 310px;
+    right: 24px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 25%;
+    color: white;
+    background-color: white;
+    height: 110px;
+}
