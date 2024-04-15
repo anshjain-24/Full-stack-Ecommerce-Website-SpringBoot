@@ -23,5 +23,5 @@ public interface ProductService {
                                        Integer minPrice, Integer maxPrice,  Integer minDiscount ,
                                        String sort, String stock, Integer pageNumber, Integer pageSize);
 
-
+    public Page<Product> searchedProducts(String query,Integer pageNumber, Integer pageSize );
 }

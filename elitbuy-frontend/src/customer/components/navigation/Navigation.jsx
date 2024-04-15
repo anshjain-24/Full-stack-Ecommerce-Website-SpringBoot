@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState, useRef } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { navigationData } from './navigationData'
@@ -119,6 +119,31 @@ export default function Navigation() {
     })
     localStorage.clear();
   }
+
+  const [showSearch, setShowSearch] = useState(false);
+  const searchRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowSearch(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  const [query, setQuery] = useState('');
+
+  const toggleSearch = () => {
+    setShowSearch(!showSearch);
+  };
+
+  const handleSearchSubmit = (query) => {
+    navigate(`/search/${query}`);
+  };
 
   return (
     <div className="bg-white pb-10">
@@ -247,7 +272,7 @@ export default function Navigation() {
                     <div className="flex lg:ml-6">
                       <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
                         <span className="sr-only">Search</span>
-                        <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
+                        <MagnifyingGlassIcon className="h-6 w-6" />
                       </a>
                     </div>
 
@@ -413,87 +438,84 @@ export default function Navigation() {
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
-                <div className=''>
-                  {adminFlag ? (
-                    <div className="">
-                      <button className="bg-indigo-600 hover:bg-gray-900 text-white font-cool py-1 px-3 rounded-md shadow-lg transition duration-300 ease-in-out mr-4"
-                        onClick={handleAdmin}>
-                        Admin Panel
-                      </button>
+                {adminFlag && (
+                  <div className="">
+                    <button className="bg-indigo-600 hover:bg-gray-900 text-white font-cool py-1 px-3 rounded-md shadow-lg transition duration-300 ease-in-out mr-4" onClick={handleAdmin}>
+                      Admin Panel
+                    </button>
+                  </div>
+                )}
 
-                    </div>
-                  ) : (<div>
-                  </div>)
-                  }
-                </div>
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6 ">
-                  {auth.user?.fname ? (
-                    <div>
-                      <Avatar
-                        className='text-white'
-                        onClick={handleUserClick}
-                        aria-controls={open ? "basic-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                        // onClick = {handleUserClick}
-                        sx={{
-                          bgcolor: deepPurple[500],
-                          color: "white",
-                          cursor: "pointer",
-                        }}
-                      >
-                        {auth.user?.fname[0].toUpperCase()}
-                      </Avatar>
-
-                      <Menu
-                        id='basic-menu'
-                        anchorEl={anchorEl}
-                        open={openUserMenu}
-                        onClose={handleCloseUserMenu}
-                        MenuListProps={{
-                          "aria-labelledby": "basic-button",
-                        }}
-                      >
-                        {/* <MenuItem onClick={handleCloseUserMenu}
-                        >
-                          Profile
-                        </MenuItem> */}
-
-                        <MenuItem onClick={() => navigate("/account/order")}>
-                          My orders
-                        </MenuItem>
-
-                        <MenuItem onClick={handleLogout}>
-                          Logout
-                        </MenuItem>
-
-                      </Menu>
-
-                    </div>
-
-                  ) : (
-
-                    <Button
-                      onClick={handleOpen}
-                      className='text-sm font-medium text-gray-700 hover:text-gray-800'
+                {auth.user?.fname ? (
+                  <div style={{ marginRight: "8px" }}>
+                    <Avatar
+                      className='text-white'
+                      onClick={handleUserClick}
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      sx={{
+                        bgcolor: deepPurple[500],
+                        color: "white",
+                        cursor: "pointer",
+                      }}
                     >
-                      Sign in
-                    </Button>
+                      {auth.user?.fname[0].toUpperCase()}
+                    </Avatar>
 
-                  )}
-
-                </div>
+                    <Menu
+                      id='basic-menu'
+                      anchorEl={anchorEl}
+                      open={openUserMenu}
+                      onClose={handleCloseUserMenu}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                      }}
+                    >
+                      <MenuItem onClick={() => navigate("/account/order")}>
+                        My orders
+                      </MenuItem>
+                      <MenuItem onClick={handleLogout}>
+                        Logout
+                      </MenuItem>
+                    </Menu>
+                  </div>
+                ) : (
+                  <Button onClick={handleOpen} className='text-sm font-medium text-gray-700 hover:text-gray-800'>
+                    Sign in
+                  </Button>
+                )}
 
                 {/* Search */}
-                {/* <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                {/* Search */}
+                {showSearch ? (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleSearchSubmit(query);
+                    }}
+                    className="relative ml-6"
+                  >
+                    <input
+                      type="text"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="Search..."
+                      className="p-2 text-gray-400 hover:text-gray-500"
+                    />
+                    <button type="submit" className="p-2 text-gray-400 hover:text-gray-500">
+                      <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="false" />
+                    </button>
+                  </form>
+                ) : (
+                  <button onClick={toggleSearch} className="p-2 text-gray-400 hover:text-gray-500">
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="false" />
-                  </a>
-                </div> */}
+                  </button>
+                )}
 
                 {/* Home */}
-                <div className="ml-4 flow-root lg:ml-6">
+                <div className="ml-4 flow-root">
                   <a href="" className="group -m-2 flex items-center p-2" onClick={handleHome}>
                     <HeroiconsOutlineHome
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -503,8 +525,8 @@ export default function Navigation() {
                 </div>
 
                 {/* Cart */}
-                {isAuthenticated() ? (
-                  <div className="ml-4 flow-root lg:ml-6">
+                {isAuthenticated() && (
+                  <div className="ml-4 flow-root">
                     <a href="" className="group -m-2 flex items-center p-2" onClick={handleCart}>
                       <ShoppingBagIcon
                         className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -514,12 +536,7 @@ export default function Navigation() {
                       <span className="sr-only">items in cart, view bag</span>
                     </a>
                   </div>
-                ) : (
-                  <div>
-                  </div>
                 )}
-
-
               </div>
             </div>
           </div>

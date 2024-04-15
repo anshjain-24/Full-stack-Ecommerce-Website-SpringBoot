@@ -154,4 +154,17 @@ public class ProductSeriveImpl implements ProductService{
 
         return filteredProducts;
     }
+
+    @Override
+    public Page<Product> searchedProducts(String query, Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        List<Product> products = productRepository.searchProduct(query);
+        int startIndex = (int) pageable.getOffset();
+        int endIndex = Math.min(startIndex+pageable.getPageSize(),products.size());
+
+        List<Product> pageContent = products.subList(startIndex,endIndex);
+
+        Page<Product> filteredProducts = new PageImpl<>(pageContent,pageable,products.size());
+        return filteredProducts;
+    }
 }
