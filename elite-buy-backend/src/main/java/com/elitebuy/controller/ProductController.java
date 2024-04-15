@@ -34,4 +34,14 @@ public class ProductController {
         Product product = productService.findProductById(productId);
         return new ResponseEntity<Product>(product,HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/search/{query}")
+    public ResponseEntity<Page<Product>> ResultantProducts(@PathVariable String query,
+                                                           @RequestParam Integer pageNumber,
+                                                           @RequestParam Integer pageSize) throws  ProductException{
+        Page<Product> res = productService.searchedProducts(query, pageNumber, pageSize);
+        System.out.println("got searched products..");
+        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
+
+    }
 }

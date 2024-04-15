@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import HomeSectionCarousel from '../HomeSectionCarousel/HomeSectionCarousel'
 import ProductRatingCard from './ProductRatingCard'
+import { isAuthenticated } from '../../../utils/auth'
 
 const product = {
     name: 'Basic Tee 6-Pack',
@@ -103,7 +104,8 @@ export default function ProductDetails() {
             // Fetch cart data again after adding item
             dispatch(getCart());
             navigate("/cart");
-            toast.success("item added to cart")
+            if(isAuthenticated){
+            toast.success("item added to cart") }
         });
     }
 

@@ -25,4 +25,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     );
 
 
+    @Query("SELECT p FROM Product p WHERE p.category.id = (SELECT c.id FROM Category c WHERE c.name = :query)")
+    public List<Product> searchProduct(@Param("query") String query);
+
 }
