@@ -13,6 +13,7 @@ import React from 'react';
 import { isAuthenticated } from '../../../utils/auth'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EBLogo from '../../../../src/data/Images/EBLogo.png'
 
 export function HeroiconsOutlineHome(props) {
   return (
@@ -297,8 +298,8 @@ export default function Navigation() {
                 <a href="#">
                   <span className="sr-only">Elite Buy</span>
                   <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                    className="h-14 w-14"
+                    src={EBLogo}
                     alt=""
                   />
                 </a>
