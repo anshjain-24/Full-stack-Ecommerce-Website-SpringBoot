@@ -46,7 +46,7 @@ const SearchResults = ({ searchQuery }) => {
 
 
   return (
-    <div style={{justifyContent:'center',marginLeft:"225px"}}>
+    <div style={{ justifyContent: 'center', marginLeft: "225px" }}>
       <section aria-labelledby="products-heading" className="pb-24 pt-6">
         <h2 id="products-heading" className="sr-only">
           Products
@@ -54,23 +54,28 @@ const SearchResults = ({ searchQuery }) => {
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
 
-          
-
-
           {/* Product grid */}
-          <div className="lg:col-span-3">
+          {data?.content?.length > 0 ? (
+            
+              <div className="lg:col-span-3">
 
-            <div className='flex flex-wrap justify-center bg-white py-5'>
-              {data?.content?.map((item) => <ProductCard product={item} />)}
+                <div className='flex flex-wrap justify-center bg-white py-5'>
+                  {data?.content?.map((item) => <ProductCard product={item} />)}
+                </div>
+              </div>
+            
+          ) : (
+            <div>
+              sorry, we couldn't find anything similar to {query}
             </div>
-          </div>
+          )}
         </div>
       </section>
 
       {/* <section className='w-full px=[3.6rem]' style={{marginRight:"225px"}}> */}
-        <div className='px-4 py-5 flex justify-center' style={{justifyContent:'center',marginRight:"225px"}}>
-          <Pagination count={data?.totalPages} color="secondary" onChange={handlePaginationChange} />
-        </div>
+      <div className='px-4 py-5 flex justify-center' style={{ justifyContent: 'center', marginRight: "225px" }}>
+        <Pagination count={data?.totalPages} color="secondary" onChange={handlePaginationChange} />
+      </div>
       {/* </section> */}
     </div>
 
