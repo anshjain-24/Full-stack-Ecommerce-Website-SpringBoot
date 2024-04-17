@@ -127,7 +127,7 @@ public class PaymentController {
                 orderRepository.save(order);
             }
             ApiResponse res = new ApiResponse();
-            res.setMessage("your order placed successfully");
+            res.setMessage("your order is placed successfully");
             res.setStatus(true);
             return new ResponseEntity<ApiResponse>(res,HttpStatus.ACCEPTED);
         }
