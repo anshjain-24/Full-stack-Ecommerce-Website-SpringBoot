@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { useNavigate, useParams } from 'react-router-dom'
 import ProductCard from './ProductCard';
 import Pagination from '@mui/material/Pagination';
+import { dark } from '@mui/material/styles/createPalette';
 
 const SearchResults = ({ searchQuery }) => {
 
@@ -57,8 +58,7 @@ const SearchResults = ({ searchQuery }) => {
           {/* Product grid */}
           {data?.content?.length > 0 ? (
             
-              <div className="lg:col-span-3">
-
+              <div className="lg:col-span-4 pr-10 mr-20">
                 <div className='flex flex-wrap justify-center bg-white py-5'>
                   {data?.content?.map((item) => <ProductCard product={item} />)}
                 </div>
