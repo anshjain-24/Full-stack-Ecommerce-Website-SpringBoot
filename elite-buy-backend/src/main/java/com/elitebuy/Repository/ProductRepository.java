@@ -25,8 +25,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     );
 
 
-    @Query("SELECT p FROM Product p WHERE p.category.id = (SELECT c.id FROM Category c WHERE c.name LIKE %:query%)" +
-            " UNION SELECT p FROM Product p WHERE p.title LIKE %:query% OR p.description LIKE %:query%")
+    @Query("SELECT p FROM Product p WHERE p.category.id = (SELECT c.id FROM Category c WHERE c.name LIKE %:query% )" +
+            " UNION SELECT p FROM Product p WHERE p.title LIKE %:query% OR p.description LIKE %:query% OR p.brand LIKE %:query%")
     public List<Product> searchProduct(@Param("query") String query);
 
 
