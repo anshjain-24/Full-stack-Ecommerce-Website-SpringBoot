@@ -11,7 +11,7 @@ const ProductReviewCard = ({ productId }) => {
 
     const fetchReviewData = async () => {
         try {
-            const response = await api.get(`/api/reviews/product/${productId}`);
+            const response = await api.get(`/product/reviews/product/${productId}`);
             setReviewData(response.data);
             console.log("Review data updated: ", reviewData);
         } catch (error) {

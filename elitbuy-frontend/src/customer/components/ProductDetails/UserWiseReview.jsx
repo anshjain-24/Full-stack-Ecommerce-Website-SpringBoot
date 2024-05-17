@@ -8,7 +8,7 @@ const UserWiseReview = ({ userId, productId }) => {
     const fetchReviewByUserByProduct = async () => {
         try {
             console.log("Fetching review for productId:", productId, "and userId:", userId);
-            const response = await api.get(`api/rating/product-user/${productId}/${userId}`);
+            const response = await api.get(`product/rating/product-user/${productId}/${userId}`);
             setRating(response.data);
         } catch (error) {
             console.log("Error occurred while fetching the data:", error);

@@ -2,12 +2,16 @@ import React from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { MainCaraouselData } from './MainCarouselData';
+import { Link } from 'react-router-dom'; 
 
 
 const MainCarousel = () => {
    
-    const items = MainCaraouselData.map((item)=> <img className='cursor-pointer' role='presentation' 
-    src = {item.image} height={5400} alt="" />)
+    const items = MainCaraouselData.map((item, index) => (
+        <Link to={item.path} key={index}> {/* Wrap each image in Link component */}
+            <img className='cursor-pointer' role='presentation' src={item.image} height={540} alt="" /> {/* Adjusted height */}
+        </Link>
+    ));
     
     
    return( <AliceCarousel

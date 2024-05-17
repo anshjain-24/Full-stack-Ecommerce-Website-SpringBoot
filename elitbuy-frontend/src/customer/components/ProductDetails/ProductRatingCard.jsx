@@ -19,7 +19,7 @@ const ProductRatingCard = ({ productId }) => {
 
     const fetchRatingData = async () => {
         try {
-            const response = await api.get(`/api/rating/product/${productId}`);
+            const response = await api.get(`/product/rating/product/${productId}`);
             setRatingData(response.data);
         } catch (error) {
             console.log("error occurred while fetching the data:", error);

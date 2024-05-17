@@ -32,7 +32,7 @@ const OrderCard = ({order}) => {
 
                     <div className='flex cursor-pointer'>
                         <img className='w-[5rem] h-[5rem] object-cover object-top' 
-                        src="https://www.googleapis.com/drive/v3/files/1VWK1_pJtFimFxvmJQiwTmH_gFHZBp9e1?alt=media&key=AIzaSyAQUgAIF4uu06bSf6ZaXtZH4EWkENlkxr4"
+                        src="https://t4.ftcdn.net/jpg/03/41/61/23/360_F_341612371_ROnXkbOvwdUc0ahHJW4DG0vaY4yNhsQz.webp"
                         // src='http://drive.google.com/uc?export=download&id=1VWK1_pJtFimFxvmJQiwTmH_gFHZBp9e1'
                             alt='' />
                         <div className='ml-5 space-y-2'>
