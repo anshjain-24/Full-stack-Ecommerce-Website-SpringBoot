@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/rating")
+@RequestMapping("/product/rating")
 public class RatingController {
 
     @Autowired
@@ -33,9 +33,11 @@ public class RatingController {
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<List<Rating>> getProductRating(@PathVariable Long productId,
-                      @RequestHeader("Authorization") String jwt) throws UserException,ProductException{
-        User user = userService.findUserProfileByJwt(jwt);
+    public ResponseEntity<List<Rating>> getProductRating(@PathVariable Long productId
+//                      @RequestHeader("Authorization") String jwt
+    ) throws UserException,ProductException{
+        User user = null;
+//                userService.findUserProfileByJwt(jwt);
         List<Rating> ratings = ratingService.getProductRating(productId);
 
         return new ResponseEntity<>(ratings,HttpStatus.CREATED);

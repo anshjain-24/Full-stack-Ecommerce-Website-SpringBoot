@@ -27,12 +27,12 @@ const ReviewAndRating = () => {
         console.log("Review:", review);
         // Navigate back or to another page after submission
         const data = {productId : products.product.id, rating:rating}
-        const response = await api.post("/api/rating/create",data)
+        const response = await api.post("/product/rating/create",data)
         const responseData  = response.data
         console.log("got this response for rating : ",responseData)
 
         const data1 = {productId : products.product.id, review:review}
-        const response1 = await api.post("/api/reviews/create",data1)
+        const response1 = await api.post("/product/reviews/create",data1)
         const responseData1  = response1.data
 
         console.log("got response this for review  : ",responseData1)
